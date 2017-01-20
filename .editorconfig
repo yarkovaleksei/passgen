@@ -1,0 +1,22 @@
+# Корневой файл EditorConfig
+root = true
+
+# Для всех файлов используем unix-совместимые переносы строк
+[*]
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+# Задаем форматирование для файлов проекта
+[*.{c,h}]
+# Используем табы для отступов
+indent_style = tab
+tab_width = 4
+trim_trailing_whitespace = true
+insert_final_newline = true
+
+[*.md]
+trim_trailing_whitespace = false
+
+# Кодировка файлов
+charset = utf-8

@@ -10,7 +10,7 @@ INSTALL_DIR = /usr/local/bin
 all: $(BINNAME)
 
 $(BINNAME): $(BINNAME).o main.o
-	gcc -o $(BIN_DIR)/$(BINNAME) $(BINNAME).o main.o
+	mkdir -p $(BIN_DIR) && gcc -o $(BIN_DIR)/$(BINNAME) $(BINNAME).o main.o
 
 $(BINNAME).o: $(SRC_DIR)/$(BINNAME).c
 	gcc -c $(SRC_DIR)/$(BINNAME).c

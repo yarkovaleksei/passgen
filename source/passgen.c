@@ -1,30 +1,28 @@
 /* passgen.c */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <time.h>
+#include "h/passgen.h"
 
-char* generate_password(int length, char *symbols)
+char getChar(char *symbols)
 {
-    srandom(time(NULL));
-    int counter = 0;
-    char* result;
-    char* default_symbols = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    char randChar;
+	return symbols[random () % strlen(symbols)];
+}
 
-    if(length < 1) {
-        printf("Type in a password Length \n");
-        scanf("%d", &length);
-    }
+char *genpass(char *symbols, int length)
+{
+	srandom(time(NULL));
+	int counter = 0;
+	char *result = malloc(length + 1);
 
-    while(counter < length)
-    {
-        randChar = symbols[random () % strlen(symbols)];
-        //printf("%c", randChar);
-        result[counter] = randChar;
-        counter++;
-    }
-    //printf("\n"); // Stops the output from being on the same line as the prompt
-    return result;
+	if(length < 1) {
+		printf("Type in a password Length \n");
+		scanf("%d", &length);
+	}
+
+	while(counter < length)
+	{
+		result[counter] = getChar(symbols);
+		counter++;
+	}
+
+	return result;
 }
