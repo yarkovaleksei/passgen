@@ -16,7 +16,9 @@ $ make install
 
 ```bash
 $ passgen -h # Вывод справочной информации
-$ passgen -l25 # Используем только английские буквы в верхнем и нижнем регистре
+$ passgen # Используем только английские буквы в верхнем и нижнем регистре
+JfwZqcfJDArKoZDxpBfadiNkw
+$ passgen -l25 # Указываем длину пароля явно
 KoZDxcfJDArpBfaJfwZqdiNkw
 $ passgen -l25 -d # Добавляем цифры
 lgqTBbVKplvL0z4EVuqcIQX4E

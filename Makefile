@@ -1,28 +1,41 @@
 # Makefile for PassGen project
+SHELL 		= /bin/bash
 
-BINNAME = passgen
-BIN_DIR = ./bin
-SRC_DIR = ./source
-INSTALL_DIR = /usr/local/bin
+BINNAME 	= passgen
+BINDIR 		= ./bin
+SRCDIR 		= ./source
+INSTALLDIR 	= /usr/local/bin
+GCC 		= gcc
+OKMSG 		= "[PASSGEN TEST] OK"
+ERRMSG 		= "[PASSGEN TEST] ERROR"
 
-.PHONY: all clean install uninstall
+.PHONY: all clean install uninstall test
+
+$(BINNAME): $(BINNAME).o main.o
+	@mkdir -p $(BINDIR)
+	@$(GCC) -Werror -o $(BINDIR)/$(BINNAME) $?
+	@strip -s $(BINDIR)/$(BINNAME)
+	@echo "[$(BINNAME)] - Project compiled"
+
+$(BINNAME).o: $(SRCDIR)/$(BINNAME).c
+	@$(GCC) -c $?
+
+main.o: $(SRCDIR)/main.c
+	@$(GCC) -c $?
 
 all: $(BINNAME)
 
-$(BINNAME): $(BINNAME).o main.o
-	mkdir -p $(BIN_DIR) && gcc -o $(BIN_DIR)/$(BINNAME) $(BINNAME).o main.o
-
-$(BINNAME).o: $(SRC_DIR)/$(BINNAME).c
-	gcc -c $(SRC_DIR)/$(BINNAME).c
-
-main.o: $(SRC_DIR)/main.c
-	gcc -c $(SRC_DIR)/main.c
-
 clean:
-	rm -rf *.o $(BIN_DIR)/$(BINNAME)
+	@rm -rf $(BINDIR)/$(BINNAME) *.o *.*~
+	@echo "[$(BINNAME)] - Project cleaned"
 
 install:
-	install $(BIN_DIR)/$(BINNAME) $(INSTALL_DIR)
+	@install $(BINDIR)/$(BINNAME) $(INSTALLDIR)
+	@echo "[$(BINNAME)] - installed to $$(which $(BINNAME))"
 
 uninstall:
-	rm -rf $(INSTALL_DIR)/$(BINNAME)
+	@rm -rf $(INSTALLDIR)/$(BINNAME)
+	@echo "[$(BINNAME)] - uninstalled from $$(which $(BINNAME))"
+
+test: all
+	@test $$($(BINDIR)/$(BINNAME) -l20 -ds | wc -m) == '21' && echo $(OKMSG) || echo $(ERRMSG)

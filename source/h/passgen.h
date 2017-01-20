@@ -1,12 +1,5 @@
-#include <getopt.h>
-#include <unistd.h>
-#include <time.h>
-#include <stdarg.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
 char *genpass(char*, int);
+char getChar(char*);
 
 int getopt_long(int argc, char * const argv[], const char *optstring, const struct option *longopts, int *longindex);
 

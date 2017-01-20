@@ -1,12 +1,21 @@
 /* passgen.c */
 
-#include "h/passgen.h"
+#include <stdio.h>
+#include <string.h>
+#include <time.h>
+#include <stdlib.h>
 
-char getChar(char *symbols)
-{
-	return symbols[random () % strlen(symbols)];
-}
 
+char getChar(char *symbols);
+
+/**
+ * @name genpass
+ * Функция генерирует строку из случайных
+ * символов и возвращает её.
+ * @param symbols {char*} Строка, символы которой будут использоваться в генераторе
+ * @param length {int} Длина пароля
+ * @return Строка из случайных символов длиной length
+ */
 char *genpass(char *symbols, int length)
 {
 	srandom(time(NULL));
@@ -24,5 +33,19 @@ char *genpass(char *symbols, int length)
 		counter++;
 	}
 
+	strcat(result, "\0");
 	return result;
 }
+
+
+/**
+ * @name getChar
+ * Возвращает один случайный символ из переданной в аргументе строки
+ * @param symbols {char*} Строка, из которой будет взят один случайный символ
+ * @return Случайный символ из строки symbols
+ */
+char getChar(char *symbols)
+{
+	return symbols[random () % strlen(symbols)];
+}
+
