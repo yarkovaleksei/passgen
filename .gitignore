@@ -1,2 +1,5 @@
 bin/
+deb/
+doc-pak/
 *.o
+description-pak

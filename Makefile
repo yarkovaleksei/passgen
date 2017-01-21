@@ -1,16 +1,24 @@
 # Makefile for PassGen project
+# Документация с примерами: http://linux.yaroslavl.ru/docs/prog/make_intro_ru.html
 
 # Рабочая оболочка
 SHELL 			= $$(which bash)
-
 # Имя бинарного файла
 PACKAGE 		= passgen
+# Описание пакета
+DESCRIPTION		= "Console password generator"
+# Описание пакета
+DESCRIPTIONFILE	= "./description-pak"
 # Версия релиза
 PACKAGEVERSION 	= "0.0.1"
 # Каталог для собранного бинарного файла
 BINDIR 			= ./bin
+# Каталог для deb пакета
+DEBDIR			= ./deb
 # Каталог с исходниками программы
 SRCDIR 			= ./source
+# Каталог с документацией программы
+DOCDIR 			= ./doc
 # Каталог для файлов локализации
 LOCALEDIR 		= ./locale
 # Файл локализации
@@ -32,31 +40,35 @@ AUTHOR 			= "Yarkov Aleksey"
 EMAIL 			= "yarkov_aleksei@mail.ru"
 CHARSET			= "UTF-8"
 LOCALE 			= "ru_RU"
+LICENSE			= "MIT"
 
-.PHONY: all clean install uninstall test extract_lang generate_lang
-
-$(PACKAGE): $(PACKAGE).o main.o
-	@mkdir -p $(BINDIR)
-	@$(GCC) -Werror -o $(BINDIR)/$(PACKAGE) $?
-	@strip -s $(BINDIR)/$(PACKAGE)
-	@echo "[$(PACKAGE)] - Project compiled"
-
-$(PACKAGE).o: $(SRCDIR)/$(PACKAGE).c
-	@$(GCC) -c $?
-
-main.o: $(SRCDIR)/main.c
-	@$(GCC) -c $?
+.PHONY: all build clean install uninstall test extract_lang generate_lang
 
 all: $(PACKAGE)
 
+$(PACKAGE): $(PACKAGE).o main.o
+	@mkdir -p $(BINDIR)
+	@$(GCC) -Werror -o $(BINDIR)/$(PACKAGE) $+
+	@strip -s $(BINDIR)/$(PACKAGE)
+	@echo $(DESCRIPTION) > $(DESCRIPTIONFILE)
+	@echo "[$(PACKAGE)] - Project compiled"
+
+%.o: $(SRCDIR)/%.c
+	@$(GCC) -c $+
+
 clean:
-	@rm -rf $(BINDIR)/$(PACKAGE) *.o *.*~
+	@rm -rf $(BINDIR) $(DEBDIR) *.o *.*~ doc-pak
 	@echo "[$(PACKAGE)] - Project cleaned"
 
 install:
 	@install $(BINDIR)/$(PACKAGE) $(INSTALLDIR)
-	cp -i $(LOCALE_MO) /usr/share/locale/ru/LC_MESSAGES
+	@cp -i $(LOCALE_MO) /usr/share/locale/ru/LC_MESSAGES
 	@echo "[$(PACKAGE)] - installed to $$(which $(PACKAGE))"
+
+# Запускаем сборку deb пакета
+build:
+	@mkdir -p $(DEBDIR)
+	@checkinstall -D --pkgname=$(PACKAGE) --pkgrelease=$(PACKAGEVERSION) --pkgversion=$$(date +%Y%m%d) --pkgsource=$(SRCDIR) --pakdir=$(DEBDIR) --docdir=$(DOKDIR) --maintainer=$(EMAIL) --pkglicense=$(LICENSE) --install=no --gzman=yes --deldoc=no --deldesc=no --delspec=yes --backup=no --strip=yes
 
 uninstall:
 	@rm -rf $(INSTALLDIR)/$(PACKAGE)
