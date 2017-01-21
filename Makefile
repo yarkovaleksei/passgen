@@ -19,6 +19,8 @@ DEBDIR			= ./deb
 SRCDIR 			= ./source
 # Каталог для файлов локализации
 LOCALEDIR 		= ./locale
+# Каталог для установки файлов локализации
+LOCALE_TARGET	= /usr/share/locale/ru/LC_MESSAGES
 # Файл локализации
 LOCALE_MO		= $(LOCALEDIR)/ru/LC_MESSAGES/$(PACKAGE).mo
 # Исходник файла локализации
@@ -54,16 +56,16 @@ sudo make uninstall - uninstall binary from $(INSTALLDIR)"
 .PHONY: all build clean install uninstall test elang glang help autodoc
 
 all: $(PACKAGE)
+	@echo "[$(PACKAGE)] - Project compiled"
 
 $(PACKAGE): $(PACKAGE).o main.o
 	@mkdir -p $(BINDIR)
-	@$(GCC) -Werror -o $(BINDIR)/$(PACKAGE) $+
-	@strip -s $(BINDIR)/$(PACKAGE)
+	@$(GCC) -Wall -o $(BINDIR)/$(PACKAGE) $?
+	@strip -s $(BINDIR)/$(PACKAGE) # Удаляем отладочную информацию из бинарника
 	@echo $(DESCRIPTION) > $(DESCRIPTIONFILE)
-	@echo "[$(PACKAGE)] - Project compiled"
 
 %.o: $(SRCDIR)/%.c
-	@$(GCC) -c $+
+	@$(GCC) -c $?
 
 # Запускаем сборку deb пакета
 build: all
@@ -91,7 +93,7 @@ clean:
 
 install: all
 	@install $(BINDIR)/$(PACKAGE) $(INSTALLDIR)
-	@cp $(LOCALE_MO) /usr/share/locale/ru/LC_MESSAGES
+	@cp $(LOCALE_MO) $(LOCALE_TARGET)
 	@echo "[$(PACKAGE)] - installed to $$(which $(PACKAGE))"
 
 uninstall:
