@@ -53,18 +53,29 @@ sudo make build 	- build deb package\n \
 sudo make install 	- install binary to $(INSTALLDIR)\n \
 sudo make uninstall - uninstall binary from $(INSTALLDIR)"
 
+# http://linux.yaroslavl.ru/docs/prog/gnu_make_3-79_russian_manual.html#SEC27
+VPATH 			= $(SRCDIR)
+
+# http://linux.yaroslavl.ru/docs/prog/gnu_make_3-79_russian_manual.html#SEC28
+vpath %.h $(SRCDIR)/h
+vpath %.c $(SRCDIR)
+vpath %.o .
+
+# http://linux.yaroslavl.ru/docs/prog/gnu_make_3-79_russian_manual.html#SEC25
+objects := $(patsubst $(SRCDIR)/%.c,%.o,$(wildcard $(SRCDIR)/*.c))
+
 .PHONY: all build clean install uninstall test elang glang help autodoc
 
 all: $(PACKAGE)
 	@echo "[$(PACKAGE)] - Project compiled"
 
-$(PACKAGE): $(PACKAGE).o main.o
+$(PACKAGE): $(objects)
 	@mkdir -p $(BINDIR)
 	@$(GCC) -Wall -o $(BINDIR)/$(PACKAGE) $?
 	@strip -s $(BINDIR)/$(PACKAGE) # Удаляем отладочную информацию из бинарника
 	@echo $(DESCRIPTION) > $(DESCRIPTIONFILE)
 
-%.o: $(SRCDIR)/%.c
+%.o: %.c
 	@$(GCC) -c $?
 
 # Запускаем сборку deb пакета
@@ -92,7 +103,7 @@ clean:
 	@echo "[$(PACKAGE)] - Project cleaned"
 
 install: all
-	@install $(BINDIR)/$(PACKAGE) $(INSTALLDIR)
+	install $(BINDIR)/$(PACKAGE) $(INSTALLDIR)
 	@cp $(LOCALE_MO) $(LOCALE_TARGET)
 	@echo "[$(PACKAGE)] - installed to $$(which $(PACKAGE))"
 
