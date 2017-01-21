@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: passgen 0.0.1\n"
 "Report-Msgid-Bugs-To: yarkov_aleksei@mail.ru\n"
-"POT-Creation-Date: 2017-01-21 14:53+0300\n"
+"POT-Creation-Date: 2017-01-21 19:46+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Yarkov Aleksey <yarkov_aleksei@mail.ru>\n"
 "Language-Team: Russian\n"
@@ -116,6 +116,11 @@ msgstr "\t$ %s -l25 -s   # Добавляем знаки пунктуации, �
 #, c-format
 msgid "\t$ %s -l25 -ds  # Adding punctuation and numbers\n"
 msgstr "\t$ %s -l25 -ds  # Добавляем знаки пунктуации и цифры\n"
+
+#: source/main.c:114
+#, c-format
+msgid "\t$ %s -l25 -c5  # List of the 5 passwords, one per line\n"
+msgstr "\t$ %s -l25 -c5  # Список из 5 паролей, по одному в строке\n"
 
 #: source/passgen.c:32
 #, c-format

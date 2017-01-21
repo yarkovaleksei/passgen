@@ -2,7 +2,7 @@
 # Документация с примерами: http://linux.yaroslavl.ru/docs/prog/make_intro_ru.html
 
 # Рабочая оболочка
-SHELL 			= $$(which bash)
+SHELL 			= /bin/bash
 # Имя бинарного файла
 PACKAGE 		= passgen
 # Описание пакета
@@ -17,8 +17,6 @@ BINDIR 			= ./bin
 DEBDIR			= ./deb
 # Каталог с исходниками программы
 SRCDIR 			= ./source
-# Каталог с документацией программы
-DOCDIR 			= ./doc
 # Каталог для файлов локализации
 LOCALEDIR 		= ./locale
 # Файл локализации
@@ -42,7 +40,18 @@ CHARSET			= "UTF-8"
 LOCALE 			= "ru_RU"
 LICENSE			= "MIT"
 
-.PHONY: all build clean install uninstall test extract_lang generate_lang
+HELP			= "Usage make:\n\
+make                - build binary file from source\n \
+make clean          - clean project folder from *.o, ./bin, etc.\n \
+make test           - run binary with test parameters\n \
+make elang          - extract localize phrases from source to *.po\n \
+make glang          - create localize *.mo file from *.po files\n \
+make autodoc        - generate README.md\n \
+sudo make build     - build deb package\n \
+sudo make install   - install binary to $(INSTALLDIR)\n \
+sudo make uninstall - uninstall binary from $(INSTALLDIR)"
+
+.PHONY: all build clean install uninstall test elang glang help autodoc
 
 all: $(PACKAGE)
 
@@ -56,19 +65,34 @@ $(PACKAGE): $(PACKAGE).o main.o
 %.o: $(SRCDIR)/%.c
 	@$(GCC) -c $+
 
+# Запускаем сборку deb пакета
+build: all
+	@mkdir -p $(DEBDIR)
+	@checkinstall \
+	--default -D --nodoc \
+	--pkgname=$(PACKAGE) \
+	--pkgrelease=$(PACKAGEVERSION) \
+	--pkgversion=$$(date +%Y%m%d) \
+	--pkgsource=$(SRCDIR) \
+	--pakdir=$(DEBDIR) \
+	--maintainer=$(EMAIL) \
+	--pkglicense=$(LICENSE) \
+	--install=no \
+	--gzman=yes \
+	--deldoc=yes \
+	--deldesc=no \
+	--delspec=yes \
+	--backup=no \
+	--strip=yes
+
 clean:
-	@rm -rf $(BINDIR) $(DEBDIR) *.o *.*~ doc-pak
+	@rm -rf $(BINDIR) $(DEBDIR) *.o *.*~ d*-pak README.md
 	@echo "[$(PACKAGE)] - Project cleaned"
 
-install:
+install: all
 	@install $(BINDIR)/$(PACKAGE) $(INSTALLDIR)
-	@cp -i $(LOCALE_MO) /usr/share/locale/ru/LC_MESSAGES
+	@cp $(LOCALE_MO) /usr/share/locale/ru/LC_MESSAGES
 	@echo "[$(PACKAGE)] - installed to $$(which $(PACKAGE))"
-
-# Запускаем сборку deb пакета
-build:
-	@mkdir -p $(DEBDIR)
-	@checkinstall -D --pkgname=$(PACKAGE) --pkgrelease=$(PACKAGEVERSION) --pkgversion=$$(date +%Y%m%d) --pkgsource=$(SRCDIR) --pakdir=$(DEBDIR) --docdir=$(DOKDIR) --maintainer=$(EMAIL) --pkglicense=$(LICENSE) --install=no --gzman=yes --deldoc=no --deldesc=no --delspec=yes --backup=no --strip=yes
 
 uninstall:
 	@rm -rf $(INSTALLDIR)/$(PACKAGE)
@@ -80,7 +104,7 @@ test: all
 
 # Сканирует исходники на предмет использования gettext
 # и создает файл локализации ./locale/ru/passgen.po
-extract_lang:
+elang:
 	@xgettext \
 	--no-wrap \
 	--force-po \
@@ -103,7 +127,7 @@ extract_lang:
 	@echo "Add translate to file $(LOCALEDIR)/ru/$(PACKAGE).po and run command 'make generate_lang'"
 
 # Создает файл локализации ./locale/ru/LC_MESSAGES/passgen.mo
-generate_lang:
+glang:
 	@msginit \
 	--no-wrap \
 	--no-translator \
@@ -113,3 +137,14 @@ generate_lang:
 	@msgfmt \
 	$(LOCALE_PO) \
 	--output-file=$(LOCALE_MO)
+
+help:
+	@echo -e $(HELP)
+
+# Генерируем вайл README.md и вставляем в него актуальную информацию
+autodoc: all
+	@cat ./.src/1 > ./README.md
+	@./bin/passgen -h >> ./README.md
+	@cat ./.src/2 >> ./README.md
+	@echo -e $(HELP) >> ./README.md
+	@echo "\`\`\`" >> ./README.md

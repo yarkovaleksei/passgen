@@ -33,8 +33,7 @@ char *getPassword(char *symbols, int length)
 		scanf("%d", &length);
 	}
 
-	while(counter < length)
-	{
+	while(counter < length) {
 		result[counter] = getChar(symbols);
 		counter++;
 	}

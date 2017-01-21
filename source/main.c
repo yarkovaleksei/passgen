@@ -20,7 +20,7 @@ int main (int argc, char * const argv[], char * const argp[])
 	char *ALPHABETS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 	char *DIGEST = "0123456789";
 	char *SYMBOLS = "!@#$%^&*()_+=-.,/`\\[]{}|";
-	char *source = malloc(strlen(ALPHABETS) + strlen(DIGEST) + strlen(SYMBOLS) + 1);;
+	char *source = malloc(sizeof(ALPHABETS) + sizeof(DIGEST) + sizeof(SYMBOLS) + 1);;
 	int iargs=0;
 	int option_index;
 	const char *short_options = "hvl:c:ds";
@@ -111,6 +111,7 @@ void print_help(int *length, char **source)
 	printf(_("\t$ %s -l25 -d   # Adds the numbers\n"), PACKAGE);
 	printf(_("\t$ %s -l25 -s   # Adding punctuation marks, but do not use numbers\n"), PACKAGE);
 	printf(_("\t$ %s -l25 -ds  # Adding punctuation and numbers\n"), PACKAGE);
+	printf(_("\t$ %s -l25 -c5  # List of the 5 passwords, one per line\n"), PACKAGE);
 	exit(EXIT_SUCCESS);
 }
 
