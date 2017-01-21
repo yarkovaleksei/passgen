@@ -1,16 +1,7 @@
 /* main.c */
 
-#include <getopt.h>
-#include <stdarg.h>
-#include <unistd.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
 #include "h/passgen.h"
 
-#define VERSION "0.0.1"
-#define BINNAME "passgen"
 
 void print_help(int *length, char **source);
 void print_version();
@@ -18,6 +9,11 @@ void print_version();
 
 int main (int argc, char * const argv[], char * const argp[])
 {
+	//setlocale (LC_ALL, "ru_RU.UTF8");
+	printf("Locale: %s\n", setlocale(LC_ALL, NULL));
+	bindtextdomain (PACKAGE, LOCALEDIR);
+	textdomain (PACKAGE);
+
 	int length = 25;
 	char *password;
 	char *ALPHABETS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
@@ -59,7 +55,7 @@ int main (int argc, char * const argv[], char * const argp[])
 				break;
 			case '?':
 			default:
-				printf("Unknown argument key!\n");
+				printf(_("Unknown argument key!\n"));
 				exit(1);
 				break;
 		};
@@ -75,26 +71,26 @@ int main (int argc, char * const argv[], char * const argp[])
 
 void print_help(int *length, char **source)
 {
-	printf("Консольный генератор паролей\n");
+	printf(_("Console password generator\n"));
 	printf("\n");
-	printf("Параметры по-умолчанию:\n");
-	printf("\tИспользуемые символы: %s\n", *source);
-	printf("\tДлина пароля:         %d\n", *length);
+	printf(_("Default values:\n"));
+	printf(_("\tUsage symbols:     %s\n"), *source);
+	printf(_("\tPassword length:   %d\n"), *length);
 	printf("\n");
-	printf("Используемые ключи:\n");
-	printf("\t-h, --help      Справочная информация\n");
-	printf("\t-v, --version   Номер версии релиза\n");
-	printf("\t-l, --length    Длина пароля. Если не указан, то\n");
-	printf("\t                он будет установлен в 25. Если указать 0,\n");
-	printf("\t                то программа запросит ввод с клавиатуры.\n");
-	printf("\t-d, --digest    Добавляет цифры к паролю\n");
-	printf("\t-s, --symbol    Добавляет знаки пунктуации к паролю\n");
+	printf(_("Usage keys:\n"));
+	printf(_("\t-h, --help      Help information\n"));
+	printf(_("\t-v, --version   Package version\n"));
+	printf(_("\t-l, --length    Password length. If not specified,\n"));
+	printf(_("\t                it will be set to 25. If set to 0,\n"));
+	printf(_("\t                the program will ask for input from the keyboard.\n"));
+	printf(_("\t-d, --digest    Adds the numbers in the password\n"));
+	printf(_("\t-s, --symbol    Adds punctuation to the password\n"));
 	printf("\n");
-	printf("Примеры использования:\n");
-	printf("\t$ %s -l25      # Используем только английские буквы в верхнем и нижнем регистре\n", BINNAME);
-	printf("\t$ %s -l25 -d   # Добавляем цифры\n", BINNAME);
-	printf("\t$ %s -l25 -s   # Добавляем знаки пунктуации, но не используем цифры\n", BINNAME);
-	printf("\t$ %s -l25 -ds  # Добавляем знаки пунктуации и цифры\n", BINNAME);
+	printf(_("Example:\n"));
+	printf(_("\t$ %s -l25      # Only English letters in upper and lower case\n"), PACKAGE);
+	printf(_("\t$ %s -l25 -d   # Adds the numbers\n"), PACKAGE);
+	printf(_("\t$ %s -l25 -s   # Adding punctuation marks, but do not use numbers\n"), PACKAGE);
+	printf(_("\t$ %s -l25 -ds  # Adding punctuation and numbers\n"), PACKAGE);
 	exit(0);
 }
 

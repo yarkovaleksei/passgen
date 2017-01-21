@@ -1,9 +1,6 @@
 /* passgen.c */
 
-#include <stdio.h>
-#include <string.h>
-#include <time.h>
-#include <stdlib.h>
+#include "h/passgen.h"
 
 
 char getChar(char *symbols);
@@ -23,7 +20,7 @@ char *genpass(char *symbols, int length)
 	char *result = malloc(length + 1);
 
 	if(length < 1) {
-		printf("Type in a password Length \n");
+		printf(_("Type in a password length\n"));
 		scanf("%d", &length);
 	}
 
