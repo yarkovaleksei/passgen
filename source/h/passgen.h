@@ -6,20 +6,24 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#include <libintl.h>           /* заголовки функций gettext */
+#include <libintl.h> /* gettext */
 
-#define ENABLE_NLS 1           /* включаем поддержку nls */
-#define _(s) gettext (s)       /* макрос для gettext */
+#define ENABLE_NLS 1
+#define _(s) gettext (s)
 
 #define VERSION "0.0.1"
 #define PACKAGE "passgen"
 #define LOCALEDIR "locale"
 
 
-char *genpass(char*, int);
-char getChar(char*);
+/* Source: source/passgen.c */
+struct passgen {
+	char* (*getPassword)(char*, int);
+	char (*getChar)(char*);
+};
+extern const struct passgen PassGen;
 
+/* Source: <getopt.h> */
 int getopt_long(int argc, char * const argv[], const char *optstring, const struct option *longopts, int *longindex);
-
 extern char *optarg;
 extern int optind, opterr, optopt;

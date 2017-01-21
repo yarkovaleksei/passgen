@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: passgen 0.0.1\n"
 "Report-Msgid-Bugs-To: yarkov_aleksei@mail.ru\n"
-"POT-Creation-Date: 2017-01-21 11:30+0300\n"
+"POT-Creation-Date: 2017-01-21 14:53+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Yarkov Aleksey <yarkov_aleksei@mail.ru>\n"
 "Language-Team: Russian\n"
@@ -17,97 +17,107 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: source/main.c:70
-#, c-format
-msgid "Unknown argument key!\n"
-msgstr "Неизвестный ключ!\n"
-
-#: source/main.c:86
+#: source/main.c:91
 #, c-format
 msgid "Console password generator\n"
 msgstr "Консольный генератор паролей\n"
 
-#: source/main.c:88
+#: source/main.c:93
 #, c-format
 msgid "Default values:\n"
 msgstr "Параметры по-умолчанию:\n"
 
-#: source/main.c:89
+#: source/main.c:94
 #, c-format
-msgid "\tUsage symbols:    %s\n"
+msgid "\tUsage symbols:     %s\n"
 msgstr "\tИспользуемые символы: %s\n"
 
-#: source/main.c:90
+#: source/main.c:95
 #, c-format
-msgid "\tPassword length:  %d\n"
+msgid "\tPassword length:   %d\n"
 msgstr "\tДлина пароля:         %d\n"
 
-#: source/main.c:92
+#: source/main.c:97
 #, c-format
 msgid "Usage keys:\n"
 msgstr "Используемые ключи:\n"
 
-#: source/main.c:93
+#: source/main.c:98
 #, c-format
 msgid "\t-h, --help      Help information\n"
 msgstr "\t-h, --help      Справочная информация\n"
 
-#: source/main.c:94
+#: source/main.c:99
 #, c-format
 msgid "\t-v, --version   Package version\n"
 msgstr "\t-v, --version   Номер версии релиза\n"
 
-#: source/main.c:95
+#: source/main.c:100
 #, c-format
 msgid "\t-l, --length    Password length. If not specified,\n"
 msgstr "\t-l, --length    Длина пароля. Если не указан, то\n"
 
-#: source/main.c:96
+#: source/main.c:101
 #, c-format
 msgid "\t                it will be set to 25. If set to 0,\n"
 msgstr "\t                он будет установлен в 25. Если указать 0,\n"
 
-#: source/main.c:97
+#: source/main.c:102
 #, c-format
 msgid "\t                the program will ask for input from the keyboard.\n"
 msgstr "\t                то программа запросит ввод с клавиатуры.\n"
 
-#: source/main.c:98
+#: source/main.c:103
+#, c-format
+msgid "\t-c, --count     The amount for one time passwords.\n"
+msgstr "\t-c, --count     Количество паролей за один раз.\n"
+
+#: source/main.c:104
+#, c-format
+msgid "\t                It is useful when you need to create\n"
+msgstr "\t                Полезно, когда надо сгенерировать\n"
+
+#: source/main.c:105
+#, c-format
+msgid "\t                a file with a unique string.\n"
+msgstr "\t                файл с уникальными строками.\n"
+
+#: source/main.c:106
 #, c-format
 msgid "\t-d, --digest    Adds the numbers in the password\n"
 msgstr "\t-d, --digest    Добавляет цифры к паролю\n"
 
-#: source/main.c:99
+#: source/main.c:107
 #, c-format
 msgid "\t-s, --symbol    Adds punctuation to the password\n"
 msgstr "\t-s, --symbol    Добавляет знаки пунктуации к паролю\n"
 
-#: source/main.c:101
+#: source/main.c:109
 #, c-format
 msgid "Example:\n"
 msgstr "Примеры использования:\n"
 
-#: source/main.c:102
+#: source/main.c:110
 #, c-format
 msgid "\t$ %s -l25      # Only English letters in upper and lower case\n"
 msgstr "\t$ %s -l25      # Только английские буквы в верхнем и нижнем регистре\n"
 
-#: source/main.c:103
+#: source/main.c:111
 #, c-format
 msgid "\t$ %s -l25 -d   # Adds the numbers\n"
 msgstr "\t$ %s -l25 -d   # Добавляем цифры\n"
 
-#: source/main.c:104
+#: source/main.c:112
 #, c-format
 msgid "\t$ %s -l25 -s   # Adding punctuation marks, but do not use numbers\n"
 msgstr "\t$ %s -l25 -s   # Добавляем знаки пунктуации, но не используем цифры\n"
 
-#: source/main.c:105
+#: source/main.c:113
 #, c-format
 msgid "\t$ %s -l25 -ds  # Adding punctuation and numbers\n"
 msgstr "\t$ %s -l25 -ds  # Добавляем знаки пунктуации и цифры\n"
 
-#: source/passgen.c:23
+#: source/passgen.c:32
 #, c-format
 msgid "Type in a password length\n"
 msgstr "Укажите длину пароля\n"

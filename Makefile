@@ -1,22 +1,39 @@
 # Makefile for PassGen project
-SHELL 			= /bin/bash
 
+# Рабочая оболочка
+SHELL 			= $$(which bash)
+
+# Имя бинарного файла
 PACKAGE 		= passgen
+# Версия релиза
 PACKAGEVERSION 	= "0.0.1"
+# Каталог для собранного бинарного файла
 BINDIR 			= ./bin
+# Каталог с исходниками программы
 SRCDIR 			= ./source
+# Каталог для файлов локализации
 LOCALEDIR 		= ./locale
+# Файл локализации
+LOCALE_MO		= $(LOCALEDIR)/ru/LC_MESSAGES/$(PACKAGE).mo
+# Исходник файла локализации
+LOCALE_PO		= $(LOCALEDIR)/ru/LC_MESSAGES/$(PACKAGE).po
+# Временный файл локализации
+TMP_LOCALE_PO	= $(LOCALEDIR)/ru/$(PACKAGE).po
+# Каталог, куда будет установлена программа
 INSTALLDIR 		= /usr/local/bin
-GCC 			= gcc
+# Путь к компилятору
+GCC 			= $$(which gcc)
+# Текст сообщения об удачном тесте
 OKMSG 			= "[PASSGEN TEST] OK"
+# Текст сообщения о неудачном тесте
 ERRMSG 			= "[PASSGEN TEST] ERROR"
 
 AUTHOR 			= "Yarkov Aleksey"
 EMAIL 			= "yarkov_aleksei@mail.ru"
-CHARSET			= "utf-8"
-LOCALE 			= "ru_RU.UTF8"
+CHARSET			= "UTF-8"
+LOCALE 			= "ru_RU"
 
-.PHONY: all clean install uninstall test extract_lang generate_lang update_lang
+.PHONY: all clean install uninstall test extract_lang generate_lang
 
 $(PACKAGE): $(PACKAGE).o main.o
 	@mkdir -p $(BINDIR)
@@ -38,7 +55,7 @@ clean:
 
 install:
 	@install $(BINDIR)/$(PACKAGE) $(INSTALLDIR)
-	cp -i $(LOCALEDIR)/ru/LC_MESSAGES/$(PACKAGE).mo /usr/share/locale/ru/LC_MESSAGES
+	cp -i $(LOCALE_MO) /usr/share/locale/ru/LC_MESSAGES
 	@echo "[$(PACKAGE)] - installed to $$(which $(PACKAGE))"
 
 uninstall:
@@ -46,8 +63,11 @@ uninstall:
 	@echo "[$(PACKAGE)] - uninstalled from $$(which $(PACKAGE))"
 
 test: all
-	@test $$($(BINDIR)/$(PACKAGE) -l20 -ds | wc -m) == '21' && echo $(OKMSG) || echo $(ERRMSG)
+	@test $$($(BINDIR)/$(PACKAGE) -l20 -ds | wc -m) == '21' && echo "[PASSGEN TEST] single line: OK" || echo "[PASSGEN TEST] single line: ERROR"
+	@test $$($(BINDIR)/$(PACKAGE) -l20 -ds -c5 | wc -l) == '5' && echo "[PASSGEN TEST] multi line: OK" || echo "[PASSGEN TEST] multi line: ERROR"
 
+# Сканирует исходники на предмет использования gettext
+# и создает файл локализации ./locale/ru/passgen.po
 extract_lang:
 	@xgettext \
 	--no-wrap \
@@ -57,27 +77,27 @@ extract_lang:
 	--default-domain=$(PACKAGE) \
 	--package-name=$(PACKAGE) \
 	--package-version=$(PACKAGEVERSION) \
-	--output-dir=$(LOCALEDIR)/ru \
+	--output-dir=/tmp \
 	--language=C \
 	--from-code=$(CHARSET) \
 	--keyword=_ \
-	$(SRCDIR)/*.c
-	@echo "Add translate to file $(LOCALEDIR)/ru/$(PACKAGE).po and run command 'make generate_lang'"
-
-generate_lang:
-	@msginit \
-	--no-wrap \
-	--input=$(LOCALEDIR)/ru/$(PACKAGE).po \
-	--output-file=$(LOCALEDIR)/ru/LC_MESSAGES/$(PACKAGE).po \
-	--locale=$(LOCALE)
-	@msgfmt \
-	$(LOCALEDIR)/ru/LC_MESSAGES/$(PACKAGE).po \
-	--output-file=$(LOCALEDIR)/ru/LC_MESSAGES/$(PACKAGE).mo
-
-update_lang:
+	$(SRCDIR)/*.c $(SRCDIR)/**/*.h
 	@msgmerge -N -U \
 	--no-wrap \
 	--suffix=.backup \
 	--backup=numbered \
-	$(LOCALEDIR)/ru/LC_MESSAGES/$(PACKAGE).po \
-	$(LOCALEDIR)/ru/$(PACKAGE).po
+	$(TMP_LOCALE_PO) \
+	/tmp/$(PACKAGE).po
+	@echo "Add translate to file $(LOCALEDIR)/ru/$(PACKAGE).po and run command 'make generate_lang'"
+
+# Создает файл локализации ./locale/ru/LC_MESSAGES/passgen.mo
+generate_lang:
+	@msginit \
+	--no-wrap \
+	--no-translator \
+	--input=$(TMP_LOCALE_PO) \
+	--output-file=$(LOCALE_PO) \
+	--locale=$(LOCALE)
+	@msgfmt \
+	$(LOCALE_PO) \
+	--output-file=$(LOCALE_MO)
