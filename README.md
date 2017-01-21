@@ -87,13 +87,13 @@ $ sudo dpkg -r passgen
 ```bash
 $ make help
 Usage make:
- make                - build binary file from source
- make clean          - clean project folder from *.o, ./bin, etc.
- make test           - run binary with test parameters
- make elang          - extract localize phrases from source to *.po
- make glang          - create localize *.mo file from *.po files
- make autodoc        - generate README.md
- sudo make build     - build deb package
- sudo make install   - install binary to /usr/local/bin
+ make 				- build binary file from source
+ make clean 			- clean project folder from *.o, ./bin, etc.
+ make test 			- run binary with test parameters
+ make elang 			- extract localize phrases from source to *.po
+ make glang 			- create localize *.mo file from *.po files
+ make autodoc 		- generate README.md
+ sudo make build 	- build deb package
+ sudo make install 	- install binary to /usr/local/bin
  sudo make uninstall - uninstall binary from /usr/local/bin
 ```

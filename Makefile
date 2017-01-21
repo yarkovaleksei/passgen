@@ -41,14 +41,14 @@ LOCALE 			= "ru_RU"
 LICENSE			= "MIT"
 
 HELP			= "Usage make:\n\
-make                - build binary file from source\n \
-make clean          - clean project folder from *.o, ./bin, etc.\n \
-make test           - run binary with test parameters\n \
-make elang          - extract localize phrases from source to *.po\n \
-make glang          - create localize *.mo file from *.po files\n \
-make autodoc        - generate README.md\n \
-sudo make build     - build deb package\n \
-sudo make install   - install binary to $(INSTALLDIR)\n \
+make 				- build binary file from source\n \
+make clean 			- clean project folder from *.o, ./bin, etc.\n \
+make test 			- run binary with test parameters\n \
+make elang 			- extract localize phrases from source to *.po\n \
+make glang 			- create localize *.mo file from *.po files\n \
+make autodoc 		- generate README.md\n \
+sudo make build 	- build deb package\n \
+sudo make install 	- install binary to $(INSTALLDIR)\n \
 sudo make uninstall - uninstall binary from $(INSTALLDIR)"
 
 .PHONY: all build clean install uninstall test elang glang help autodoc
