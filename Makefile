@@ -82,7 +82,7 @@ $(PACKAGE): $(objects)
 build: all
 	@mkdir -p $(DEBDIR)
 	@checkinstall \
-	--default -D --nodoc \
+	--default --nodoc \
 	--pkgname=$(PACKAGE) \
 	--pkgrelease=$(PACKAGEVERSION) \
 	--pkgversion=$$(date +%Y%m%d) \
@@ -97,6 +97,7 @@ build: all
 	--delspec=yes \
 	--backup=no \
 	--strip=yes
+	@echo -e "Run for install package:\n\n\tsudo dpkg -i ./deb/*.deb"
 
 clean:
 	@rm -rf $(BINDIR) $(DEBDIR) *.o *.*~ d*-pak
@@ -137,7 +138,7 @@ elang:
 	--backup=numbered \
 	$(TMP_LOCALE_PO) \
 	/tmp/$(PACKAGE).po
-	@echo "Add translate to file $(LOCALEDIR)/ru/$(PACKAGE).po and run command 'make generate_lang'"
+	@echo -e "Add translate to file $(LOCALEDIR)/ru/$(PACKAGE).po and run command\n\n\tmake glang"
 
 # Создает файл локализации ./locale/ru/LC_MESSAGES/passgen.mo
 glang:
