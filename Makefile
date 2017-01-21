@@ -88,7 +88,7 @@ build: all
 	--strip=yes
 
 clean:
-	@rm -rf $(BINDIR) $(DEBDIR) *.o *.*~ d*-pak README.md
+	@rm -rf $(BINDIR) $(DEBDIR) *.o *.*~ d*-pak
 	@echo "[$(PACKAGE)] - Project cleaned"
 
 install: all
