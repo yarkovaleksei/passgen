@@ -1,5 +1,12 @@
+.fuse_*
 bin/
 deb/
 doc-pak/
+autom4te.*/
 *.o
+*.m4
+*.log
+*.scan
+*.status
 description-pak
+Makefile

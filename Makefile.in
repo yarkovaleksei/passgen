@@ -1,0 +1,212 @@
+#!/usr/bin/make -f
+
+prefix         =    @prefix@
+exec_prefix    =    @exec_prefix@
+bindir         =    @bindir@
+sbindir        =    @sbindir@
+libexecdir     =    @libexecdir@
+sysconfdir     =    @sysconfdir@
+sharedstatedir =    @sharedstatedir@
+localstatedir  =    @localstatedir@
+libdir         =    @libdir@
+includedir     =    @includedir@
+oldincludedir  =    @oldincludedir@
+datarootdir    =    @datarootdir@
+datadir        =    @datadir@
+infodir        =    @infodir@
+localedir      =    @localedir@
+mandir         =    @mandir@
+docdir         =    @docdir@
+htmldir        =    @htmldir@
+dvidir         =    @dvidir@
+pdfdir         =    @pdfdir@
+psdir          =    @psdir@
+
+# Makefile for PassGen project
+# Документация с примерами: http://linux.yaroslavl.ru/docs/prog/make_intro_ru.html
+
+AUTHOR          = "Yarkov Aleksey"
+EMAIL           = yarkov_aleksei@mail.ru
+CHARSET         = UTF-8
+LOCALE          = ru_RU
+LICENSE         = MIT
+
+# Каталог, куда будет установлена программа
+INSTALLDIR      = $(bindir)
+
+HELP            = "Usage make:\n\
+\tmake                               - build binary file from source\n \
+\tmake clean                         - clean project folder from *.o, ./bin, etc.\n \
+\tmake distclean                     - clean project folder from ./configure created\n \
+\tmake check                         - run binary with test parameters\n \
+\tmake elang                         - extract localize phrases from source to *.po\n \
+\tmake glang                         - create localize *.mo file from *.po files\n \
+\tmake autodoc                       - generate README.md\n \
+\tsudo make build install=<yes|no>   - build deb package\n \
+\tsudo make install                  - install binary to $(INSTALLDIR)\n \
+\tsudo make uninstall                - uninstall binary from $(INSTALLDIR)"
+
+# Рабочая оболочка
+SHELL           = /bin/bash
+# Имя бинарного файла
+PACKAGE_NAME    = passgen
+# Версия релиза
+PACKAGE_VERSION = "1.0.0"
+# Описание пакета
+DESCRIPTION     = "Console password generator"
+# Зависимости пакета
+DEPENDENCIES    = "mcrypt, libmcrypt-dev"
+# Описание пакета
+DESCRIPTIONFILE = "./description-pak"
+# Каталог для собранного бинарного файла
+BINDIR          = ./bin
+# Каталог для manpage
+MANDIR          = ./man
+# Каталог для установки файлов manpage
+MAN_TARGET      = $(mandir)/man1
+# Каталог для deb пакета
+DEBDIR          = ./deb
+# Каталог с исходниками программы
+SRCDIR          = ./source
+# Каталог для файлов локализации
+LOCALEDIR       = ./locale
+# Каталог для установки файлов локализации
+LOCALE_TARGET   = $(localedir)/locale/ru/LC_MESSAGES
+# Файл локализации
+LOCALE_MO       = $(LOCALEDIR)/ru/LC_MESSAGES/$(PACKAGE_NAME).mo
+# Исходник файла локализации
+LOCALE_PO       = $(LOCALEDIR)/ru/LC_MESSAGES/$(PACKAGE_NAME).po
+# Временный файл локализации
+TMP_LOCALE_PO   = $(LOCALEDIR)/ru/$(PACKAGE_NAME).po
+# Флаги компилятора
+CFLAGS          = -Wall -std=c99 -fpic -D_XOPEN_SOURCE=600 -lmcrypt
+GCCDEFINES      = -DTEST="TESTDEFINE"
+# Файлы и папки, которые удалятся по команде make [dist]clean
+CLEANED         = $(BINDIR) $(DEBDIR) ./*.o ./*.*~
+DISTCLEANED     = $(BINDIR) $(DEBDIR) ./*.m4 ./*.log ./*.scan ./*.status ./autom4te.* ./Makefile ./.fuse_hidden*
+
+ONELINEOKMSG    = "[$(PACKAGE_NAME)]: TEST - single line: OK"
+ONELINEERRMSG   = "[$(PACKAGE_NAME)]: TEST - single line: ERROR"
+MULTILINEOKMSG  = "[$(PACKAGE_NAME)]: TEST - multi line: OK"
+MULTILINEERRMSG = "[$(PACKAGE_NAME)]: TEST - multi line: ERROR"
+
+# http://linux.yaroslavl.ru/docs/prog/gnu_make_3-79_russian_manual.html#SEC27
+VPATH           = $(SRCDIR)
+
+# http://linux.yaroslavl.ru/docs/prog/gnu_make_3-79_russian_manual.html#SEC28
+vpath %.h $(SRCDIR)/h
+vpath %.c $(SRCDIR)
+vpath %.o .
+
+# http://linux.yaroslavl.ru/docs/prog/gnu_make_3-79_russian_manual.html#SEC25
+objects := $(patsubst $(SRCDIR)/%.c,%.o,$(wildcard $(SRCDIR)/*.c))
+
+.PHONY: all build clean distclean install uninstall check elang glang help autodoc
+
+all: $(PACKAGE_NAME)
+	@echo "[$(PACKAGE_NAME)] - Project compiled"
+	@make check
+	@make autodoc
+
+$(PACKAGE_NAME): $(objects)
+	@mkdir -p $(BINDIR)
+	$(CC) $(CFLAGS) $(GCCDEFINES) -o $(BINDIR)/$(PACKAGE_NAME) $?
+	@strip -s $(BINDIR)/$(PACKAGE_NAME) # Удаляем отладочную информацию из бинарника
+	@echo $(DESCRIPTION) > $(DESCRIPTIONFILE)
+
+%.o: %.c
+	$(CC) $(CFLAGS) $(GCCDEFINES) -c $?
+
+# Запускаем сборку deb пакета
+build:
+	@mkdir -p $(DEBDIR)
+	@checkinstall \
+	--default --nodoc \
+	--pkgname=$(PACKAGE_NAME) \
+	--pkgrelease=$(PACKAGE_VERSION) \
+	--pkgversion=$$(date +%Y%m%d) \
+	--pkgsource=$(SRCDIR) \
+	--pakdir=$(DEBDIR) \
+	--maintainer=$(EMAIL) \
+	--pkglicense=$(LICENSE) \
+	--requires=$(DEPENDENCIES) \
+	--install=$$(test ${install} == 'yes' && echo -n 'yes' || echo -n 'no') \
+	--gzman=yes \
+	--deldoc=yes \
+	--deldesc=no \
+	--delspec=yes \
+	--backup=no \
+	--strip=yes
+
+clean:
+	@rm -rf $(CLEANED)
+	@echo "[$(PACKAGE_NAME)] - Project cleaned"
+
+distclean:
+	@rm -rf $(DISTCLEANED)
+	@echo "[$(PACKAGE_NAME)] - Dist cleaned"
+
+install:
+	@install -D $(BINDIR)/$(PACKAGE_NAME) $(INSTALLDIR)
+	@install -D $(LOCALE_MO) $(LOCALE_TARGET)
+	@install -D -g 0 -o 0 -m 0644 $(MANDIR)/$(PACKAGE_NAME).1 $(MAN_TARGET)
+	@gzip --force $(MAN_TARGET)/$(PACKAGE_NAME).1
+	@echo "[$(PACKAGE_NAME)] - installed to $$(which $(PACKAGE_NAME))"
+
+uninstall:
+	@rm -rf $(INSTALLDIR)/$(PACKAGE_NAME)
+	@echo "[$(PACKAGE_NAME)] - uninstalled from $$(which $(PACKAGE_NAME))"
+
+check:
+	@test $$($(BINDIR)/$(PACKAGE_NAME) -l20 -ds | wc -m) == '21' && echo $(ONELINEOKMSG) || echo $(ONELINEERRMSG)
+	@test $$($(BINDIR)/$(PACKAGE_NAME) -l20 -ds -c5 | wc -l) == '5' && echo $(MULTILINEOKMSG) || echo $(MULTILINEERRMSG)
+
+# Сканирует исходники на предмет использования gettext
+# и создает файл локализации ./locale/ru/passgen.po.
+# Если файл существует, то аккуратно обновляет его,
+# сохраняя резервную копию.
+elang:
+	@xgettext \
+	--no-wrap \
+	--force-po \
+	--copyright-holder=$(AUTHOR) \
+	--msgid-bugs-address=$(EMAIL) \
+	--default-domain=$(PACKAGE_NAME) \
+	--package-name=$(PACKAGE_NAME) \
+	--package-version=$(PACKAGE_VERSION) \
+	--output-dir=/tmp \
+	--language=C \
+	--from-code=$(CHARSET) \
+	--keyword=_ \
+	$(SRCDIR)/*.c $(SRCDIR)/**/*.h
+	@msgmerge -N -U \
+	--no-wrap \
+	--suffix=.backup \
+	--backup=numbered \
+	$(TMP_LOCALE_PO) \
+	/tmp/$(PACKAGE_NAME).po
+	@echo -e "Add translate to file $(LOCALEDIR)/ru/$(PACKAGE_NAME).po and run command\n\n\tmake glang"
+
+# Создает файл локализации ./locale/ru/LC_MESSAGES/passgen.mo
+glang:
+	@msginit \
+	--no-wrap \
+	--no-translator \
+	--input=$(TMP_LOCALE_PO) \
+	--output-file=$(LOCALE_PO) \
+	--locale=$(LOCALE)
+	@msgfmt \
+	$(LOCALE_PO) \
+	--output-file=$(LOCALE_MO)
+	@rm -f $(LOCALEDIR)/ru/*.~*~
+
+help:
+	@echo -e $(HELP)
+
+# Генерируем файл README.md и вставляем в него актуальную информацию
+autodoc:
+	@cat ./.src/1 > ./README.md
+	@./bin/passgen -h >> ./README.md
+	@cat ./.src/2 >> ./README.md
+	@echo -e $(HELP) >> ./README.md
+	@echo "\`\`\`" >> ./README.md

@@ -4,40 +4,45 @@
 ### Попытался освоить C на досуге и вот наваял такой консольный генератор паролей.
 
 - - -
-## Сборка и установка
+## Сборка
 
 ```bash
 $ git clone https://github.com/yarkovaleksei/passgen.git
 $ cd passgen
+$ ./configure --prefix=/usr/local
 $ make
-$ sudo make install
 ```
 
 - - -
-## Сборка deb пакета
+# Установка
+
+*Самый простой вариант:*
 
 ```bash
-$ sudo make build
+$ sudo make install
 ```
 
-**Можно заодно и установить пакет в систему:**
+Но [вот тут](https://habrahabr.ru/post/130868/) очень не советуют так делать, а советуют юзать **checkinstall**.
+
+Вот такая команда именно его и задействует + соберет пакет в каталог **deb**.
 
 ```bash
 $ sudo make build install=yes
 ```
 
+Если указать `install=no` или просто опустить параметр `install`, то пакет будет собран в каталог **deb**, но установки не прозойдет.
+
 - - -
 ## Установка deb пакета вручную
 
 ```bash
-$ sudo dpkg -i ./deb/*.deb
+$ sudo dpkg -i ./deb/passgen*.deb
 ```
 
 - - -
 ## Использование
 
 ```bash
-$ #man passgen
 $ passgen -h
 Консольный генератор паролей
 
@@ -105,13 +110,14 @@ $ sudo dpkg -r passgen
 ```bash
 $ make help
 Usage make:
- make 				- build binary file from source
- make clean 			- clean project folder from *.o, ./bin, etc.
- make test 			- run binary with test parameters
- make elang 			- extract localize phrases from source to *.po
- make glang 			- create localize *.mo file from *.po files
- make autodoc 		- generate README.md
- sudo make build 	- build deb package
- sudo make install 	- install binary to /usr/local/bin
- sudo make uninstall - uninstall binary from /usr/local/bin
+ 	make                               - build binary file from source
+ 	make clean                         - clean project folder from *.o, ./bin, etc.
+ 	make distclean                     - clean project folder from ./configure created
+ 	make check                         - run binary with test parameters
+ 	make elang                         - extract localize phrases from source to *.po
+ 	make glang                         - create localize *.mo file from *.po files
+ 	make autodoc                       - generate README.md
+ 	sudo make build install=<yes|no>   - build deb package
+ 	sudo make install                  - install binary to /usr/local/bin
+ 	sudo make uninstall                - uninstall binary from /usr/local/bin
 ```
