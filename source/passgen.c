@@ -29,7 +29,7 @@ char *getPassword(char *symbols, int length)
 	char *result = malloc(length + 1);
 
 	if(length < 1) {
-		printf(_("Type in a password length\n"));
+		printf("%s\n", _("Type in a password length"));
 		scanf("%d", &length);
 	}
 

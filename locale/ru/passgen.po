@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: passgen 0.0.1\n"
 "Report-Msgid-Bugs-To: yarkov_aleksei@mail.ru\n"
-"POT-Creation-Date: 2017-01-21 19:46+0300\n"
+"POT-Creation-Date: 2017-01-22 13:27+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Yarkov Aleksey <yarkov_aleksei@mail.ru>\n"
 "Language-Team: Russian\n"
@@ -17,112 +17,131 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: source/main.c:91
-#, c-format
-msgid "Console password generator\n"
-msgstr "Консольный генератор паролей\n"
-
-#: source/main.c:93
-#, c-format
-msgid "Default values:\n"
-msgstr "Параметры по-умолчанию:\n"
-
-#: source/main.c:94
-#, c-format
-msgid "\tUsage symbols:     %s\n"
-msgstr "\tИспользуемые символы: %s\n"
-
-#: source/main.c:95
-#, c-format
-msgid "\tPassword length:   %d\n"
-msgstr "\tДлина пароля:         %d\n"
-
-#: source/main.c:97
-#, c-format
-msgid "Usage keys:\n"
-msgstr "Используемые ключи:\n"
-
-#: source/main.c:98
-#, c-format
-msgid "\t-h, --help      Help information\n"
-msgstr "\t-h, --help      Справочная информация\n"
-
-#: source/main.c:99
-#, c-format
-msgid "\t-v, --version   Package version\n"
-msgstr "\t-v, --version   Номер версии релиза\n"
-
-#: source/main.c:100
-#, c-format
-msgid "\t-l, --length    Password length. If not specified,\n"
-msgstr "\t-l, --length    Длина пароля. Если не указан, то\n"
-
-#: source/main.c:101
-#, c-format
-msgid "\t                it will be set to 25. If set to 0,\n"
-msgstr "\t                он будет установлен в 25. Если указать 0,\n"
-
-#: source/main.c:102
-#, c-format
-msgid "\t                the program will ask for input from the keyboard.\n"
-msgstr "\t                то программа запросит ввод с клавиатуры.\n"
-
-#: source/main.c:103
-#, c-format
-msgid "\t-c, --count     The amount for one time passwords.\n"
-msgstr "\t-c, --count     Количество паролей за один раз.\n"
-
-#: source/main.c:104
-#, c-format
-msgid "\t                It is useful when you need to create\n"
-msgstr "\t                Полезно, когда надо сгенерировать\n"
-
-#: source/main.c:105
-#, c-format
-msgid "\t                a file with a unique string.\n"
-msgstr "\t                файл с уникальными строками.\n"
-
-#: source/main.c:106
-#, c-format
-msgid "\t-d, --digest    Adds the numbers in the password\n"
-msgstr "\t-d, --digest    Добавляет цифры к паролю\n"
-
-#: source/main.c:107
-#, c-format
-msgid "\t-s, --symbol    Adds punctuation to the password\n"
-msgstr "\t-s, --symbol    Добавляет знаки пунктуации к паролю\n"
-
-#: source/main.c:109
-#, c-format
-msgid "Example:\n"
-msgstr "Примеры использования:\n"
-
-#: source/main.c:110
-#, c-format
-msgid "\t$ %s -l25      # Only English letters in upper and lower case\n"
-msgstr "\t$ %s -l25      # Только английские буквы в верхнем и нижнем регистре\n"
-
-#: source/main.c:111
-#, c-format
-msgid "\t$ %s -l25 -d   # Adds the numbers\n"
-msgstr "\t$ %s -l25 -d   # Добавляем цифры\n"
-
 #: source/main.c:112
 #, c-format
-msgid "\t$ %s -l25 -s   # Adding punctuation marks, but do not use numbers\n"
-msgstr "\t$ %s -l25 -s   # Добавляем знаки пунктуации, но не используем цифры\n"
+msgid "One of the arguments %s is mandatory"
+msgstr "Один из аргументов %s надо указать обязательно"
 
-#: source/main.c:113
-#, c-format
-msgid "\t$ %s -l25 -ds  # Adding punctuation and numbers\n"
-msgstr "\t$ %s -l25 -ds  # Добавляем знаки пунктуации и цифры\n"
+#: source/main.c:125
+msgid "Console password generator"
+msgstr "Консольный генератор паролей"
 
-#: source/main.c:114
-#, c-format
-msgid "\t$ %s -l25 -c5  # List of the 5 passwords, one per line\n"
-msgstr "\t$ %s -l25 -c5  # Список из 5 паролей, по одному в строке\n"
+#: source/main.c:127
+msgid "Default values"
+msgstr "Параметры по-умолчанию"
+
+#: source/main.c:128
+msgid "Password length"
+msgstr "Длина пароля"
+
+#: source/main.c:130
+msgid "Usage keys"
+msgstr "Используемые ключи"
+
+#: source/main.c:131
+msgid "Help information"
+msgstr "Справочная информация"
+
+#: source/main.c:132
+msgid "Package version"
+msgstr "Номер версии релиза"
+
+#: source/main.c:133
+msgid "Password length. If not specified,"
+msgstr "Длина пароля. Если не указан, то"
+
+#: source/main.c:134
+msgid "it will be set to 25. If set to 0,"
+msgstr "он будет установлен в 25. Если указать 0,"
+
+#: source/main.c:135
+msgid "the program will ask for input from the keyboard."
+msgstr "то программа запросит ввод с клавиатуры."
+
+#: source/main.c:136
+msgid "The amount for one time passwords."
+msgstr "Количество паролей за один вызов программы."
+
+#: source/main.c:137
+msgid "It is useful when you need to create"
+msgstr "Полезно, когда надо сгенерировать"
+
+#: source/main.c:138
+msgid "a file with a unique string."
+msgstr "файл с уникальными строками."
+
+#: source/main.c:139
+msgid "A string containing the possible"
+msgstr "Строка, содержащая возможные"
+
+#: source/main.c:140
+msgid "characters in the password."
+msgstr "символы для генерации пароля."
+
+#: source/main.c:141
+msgid "If the key is specified, the keys"
+msgstr "Если ключ указан, то ключи"
+
+#: source/main.c:142
+msgid "will be ignored."
+msgstr "будут проигнорированы."
+
+#: source/main.c:143
+msgid "Use uppercase letters in the password"
+msgstr "Использовать английские буквы в верхнем регистре"
+
+#: source/main.c:144
+msgid "Use lowercase letters in the password"
+msgstr "Использовать английские буквы в нижнем регистре"
+
+#: source/main.c:145
+msgid "Use the numbers in the password"
+msgstr "Использовать цифры"
+
+#: source/main.c:146
+msgid "Use punctuation to the password"
+msgstr "Использовать символы и знаки препинания"
+
+#: source/main.c:147
+msgid "Add space to the password pattern"
+msgstr "Добавить пробел в шаблон пароля"
+
+#: source/main.c:149
+msgid "Example"
+msgstr "Примеры использования"
+
+#: source/main.c:150
+msgid "Input length from the keyboard"
+msgstr "Ввести длину пароля с клавиатуры"
+
+#: source/main.c:151
+msgid "Use the lowercase letters only"
+msgstr "Использовать только английские буквы в нижнем регистре"
+
+#: source/main.c:152
+msgid "Use punctuation marks only"
+msgstr "Использовать только символы и знаки препинания"
+
+#: source/main.c:153
+msgid "Use lowercase letters and numbers only"
+msgstr "Использовать только английские буквы в нижнем регистре и цифры"
+
+#: source/main.c:154
+msgid "Use lowercase and uppercase letters only"
+msgstr "Использовать только английские буквы в нижнем и верхнем регистре"
+
+#: source/main.c:155
+msgid "Use symbols '123abc' only"
+msgstr "Использовать только перечисленные символы: '123abc'"
+
+#: source/main.c:156
+msgid "Use symbols '123abc' with space"
+msgstr "Использовать только перечисленные символы: '123abc' и пробел"
+
+#: source/main.c:157
+msgid "List of the 5 passwords, one per line"
+msgstr "Список из 5 паролей, по одному в строке"
 
 #: source/passgen.c:32
-#, c-format
-msgid "Type in a password length\n"
-msgstr "Укажите длину пароля\n"
+msgid "Type in a password length"
+msgstr "Укажите длину пароля"

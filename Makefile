@@ -13,6 +13,10 @@ DESCRIPTIONFILE	= "./description-pak"
 PACKAGEVERSION 	= "0.0.1"
 # Каталог для собранного бинарного файла
 BINDIR 			= ./bin
+# Каталог для manpage
+MANDIR 			= ./man
+# Каталог для установки файлов manpage
+MAN_TARGET		= /usr/local/man/man1
 # Каталог для deb пакета
 DEBDIR			= ./deb
 # Каталог с исходниками программы
@@ -31,6 +35,8 @@ TMP_LOCALE_PO	= $(LOCALEDIR)/ru/$(PACKAGE).po
 INSTALLDIR 		= /usr/local/bin
 # Путь к компилятору
 GCC 			= $$(which gcc)
+# Флаги компилятора
+GCCFLAGS		=  -Wall -std=c99 -D_XOPEN_SOURCE=600
 # Текст сообщения об удачном тесте
 OKMSG 			= "[PASSGEN TEST] OK"
 # Текст сообщения о неудачном тесте
@@ -71,12 +77,12 @@ all: $(PACKAGE)
 
 $(PACKAGE): $(objects)
 	@mkdir -p $(BINDIR)
-	@$(GCC) -Wall -o $(BINDIR)/$(PACKAGE) $?
+	@$(GCC) $(GCCFLAGS) -o $(BINDIR)/$(PACKAGE) $?
 	@strip -s $(BINDIR)/$(PACKAGE) # Удаляем отладочную информацию из бинарника
 	@echo $(DESCRIPTION) > $(DESCRIPTIONFILE)
 
 %.o: %.c
-	@$(GCC) -c $?
+	@$(GCC) -c $(GCCFLAGS) $?
 
 # Запускаем сборку deb пакета
 build: all
@@ -97,7 +103,6 @@ build: all
 	--delspec=yes \
 	--backup=no \
 	--strip=yes
-	@echo -e "Run for install package:\n\n\tsudo dpkg -i ./deb/*.deb"
 
 clean:
 	@rm -rf $(BINDIR) $(DEBDIR) *.o *.*~ d*-pak
@@ -106,6 +111,9 @@ clean:
 install: all
 	install $(BINDIR)/$(PACKAGE) $(INSTALLDIR)
 	@cp $(LOCALE_MO) $(LOCALE_TARGET)
+	@mkdir -p $(MAN_TARGET)
+	@install -g 0 -o 0 -m 0644 $(MANDIR)/$(PACKAGE).1 $(MAN_TARGET)
+	@gzip --force $(MAN_TARGET)/$(PACKAGE).1
 	@echo "[$(PACKAGE)] - installed to $$(which $(PACKAGE))"
 
 uninstall:

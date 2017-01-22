@@ -31,4 +31,5 @@ $ sudo dpkg -i ./deb/*.deb
 ## Использование
 
 ```bash
+$ #man passgen
 $ passgen -h
