@@ -96,7 +96,7 @@ build: all
 	--pakdir=$(DEBDIR) \
 	--maintainer=$(EMAIL) \
 	--pkglicense=$(LICENSE) \
-	--install=no \
+	--install=`test ${install} == 'yes' && echo -n 'yes' || echo -n 'no'` \
 	--gzman=yes \
 	--deldoc=yes \
 	--deldesc=no \

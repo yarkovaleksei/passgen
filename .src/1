@@ -20,8 +20,14 @@ $ sudo make install
 $ sudo make build
 ```
 
+**Можно заодно и установить пакет в систему:**
+
+```bash
+$ sudo make build install=yes
+```
+
 - - -
-## Установка deb пакета
+## Установка deb пакета вручную
 
 ```bash
 $ sudo dpkg -i ./deb/*.deb
