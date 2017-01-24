@@ -1,4 +1,3 @@
-#pragma once
 /* print.h */
 
 #ifndef __PRINT__

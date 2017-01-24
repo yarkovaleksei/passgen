@@ -4,18 +4,13 @@
 #include "h/passgen.h"
 #include "h/print.h"
 
-#ifndef _TEST
-#define _TEST
-#endif
 
 int main (int argc, char * const argv[], char * const argp[])
 {
-	srandom(time(NULL));
+	srand((unsigned) time(NULL) * getpid());
 	setlocale(LC_ALL, "");
-	bindtextdomain(PACKAGE_NAME, LOCALEDIR);
+	bindtextdomain(PACKAGE_NAME, PACKAGE_LOCALE_DIR);
 	textdomain(PACKAGE_NAME);
-
-	//printf("%s - OK\n", _TEST);
 
 	int length = 25;
 	int count = 1;

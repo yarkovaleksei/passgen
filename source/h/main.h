@@ -1,4 +1,3 @@
-#pragma once
 /* main.h */
 
 #ifndef __MAIN__
@@ -14,11 +13,17 @@
 #include <time.h>
 #include <libintl.h> /* gettext */
 
-#include <config.h>
-
 #define ENABLE_NLS 1
 #define _(s) gettext (s)
 
-#define LOCALEDIR "locale"
-
 #endif /* __MAIN__ */
+
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
+
+#ifdef HAVE_LIBLIBCRYPT
+	#include <crypt.h>
+#else
+	#error Please install libcrypt-dev before compilation!
+#endif

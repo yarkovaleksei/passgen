@@ -1,4 +1,3 @@
-#pragma once
 /* passgen.h */
 
 #ifndef __PASSGEN__

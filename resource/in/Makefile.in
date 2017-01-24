@@ -23,18 +23,18 @@ dvidir         =    @dvidir@
 pdfdir         =    @pdfdir@
 psdir          =    @psdir@
 
-
 # Makefile for PassGen project
 # Документация с примерами: http://linux.yaroslavl.ru/docs/prog/make_intro_ru.html
 
-PACKAGE_NAME    	= "@PACKAGE_NAME@"
+PACKAGE_NAME    	= @PACKAGE_NAME@
 PACKAGE_VERSION 	= "@PACKAGE_VERSION@"
-PACKAGE_URL			= "@PACKAGE_URL@"
+PACKAGE_URL			= @PACKAGE_URL@
 PACKAGE_DESCRIPTION = "@PACKAGE_DESCRIPTION@"
+PACKAGE_TARNAME		= "@PACKAGE_TARNAME@"
 
 PACKAGE_AUTHOR      = "@PACKAGE_AUTHOR@"
 PACKAGE_EMAIL       = @PACKAGE_BUGREPORT@
-PACKAGE_LICENSE   	= "@PACKAGE_LICENSE@"
+PACKAGE_LICENSE   	= @PACKAGE_LICENSE@
 
 # Рабочая оболочка
 SHELL           = /bin/bash
@@ -69,8 +69,8 @@ LC_MESSAGES		= LC_MESSAGES
 # Временный файл локализации
 TMP_LOCALE_PO   = /tmp/$(LOCALE_PO)
 # Флаги компилятора
-CFLAGS          = -Wall -std=c99 -fpic -D_XOPEN_SOURCE=600 -I$(SRCDIR)/h
-GCCDEFINES      = -DTEST=TESTDEFINE
+CFLAGS          = -Wall -std=c99 -fpic -D_XOPEN_SOURCE=600 -I$(SRCDIR)/h -lcrypt
+DEFS 			= @DEFS@
 # Файлы и папки, которые удалятся по команде make [dist]clean
 CLEANED         = $(BINDIR) ./*.o ./*.*~
 DISTCLEANED     = $(DEBDIR) ./*.m4 ./*.log ./*.scan ./*.status ./autom4te.* ./Makefile ./.fuse_hidden* ./$(SRCDIR)/h/*.h.in~ ./$(SRCDIR)/h/stamp-h1
@@ -97,19 +97,20 @@ objects := $(patsubst $(SRCDIR)/%.c,%.o,$(wildcard $(SRCDIR)/*.c))
 
 all: $(PACKAGE_NAME)
 	@echo "[$(PACKAGE_NAME)] - Project compiled"
+	@printf "%`tput cols`s"|tr ' ' '-'
 
 $(PACKAGE_NAME): $(objects)
+	@printf "%`tput cols`s"|tr ' ' '-'
 	@mkdir -p $(BINDIR)
-	$(CC) $(CFLAGS) $(GCCDEFINES) -o $(BINDIR)/$(PACKAGE_NAME) $?
+	$(CC) $(DEFS) $(CFLAGS) -o $(BINDIR)/$(PACKAGE_NAME) $?
 	@strip -s $(BINDIR)/$(PACKAGE_NAME) # Удаляем отладочную информацию из бинарника
 	@echo $(DESCRIPTION) > $(DESCRIPTIONFILE)
 
 %.o: %.c
-	$(CC) $(CFLAGS) $(GCCDEFINES) -c $?
+	$(CC) $(DEFS) $(CFLAGS) -c $?
 
 # Запускаем сборку deb пакета
 build:
-#	@test -f $(BINDIR)/$(PACKAGE_NAME) || echo "Not found $(BINDIR)/$(PACKAGE_NAME) file" && exit 1;
 	@mkdir -p $(DEBDIR)
 	@checkinstall \
 	--default \
@@ -132,14 +133,19 @@ build:
 	--strip=yes
 
 clean:
+	@printf "%`tput cols`s"|tr ' ' '-'
 	@rm -rf $(CLEANED)
 	@echo "[$(PACKAGE_NAME)] - Project cleaned"
+	@printf "%`tput cols`s"|tr ' ' '-'
 
 distclean:
+	@printf "%`tput cols`s"|tr ' ' '-'
 	@rm -rf $(DISTCLEANED)
 	@echo "[$(PACKAGE_NAME)] - Dist cleaned"
+	@printf "%`tput cols`s"|tr ' ' '-'
 
 install:
+	@printf "%`tput cols`s"|tr ' ' '-'
 	@install -D $(BINDIR)/$(PACKAGE_NAME) $(bindir)
 	@for localedir in $(LOCALES); do \
 		l=$$(basename $$localedir) && \
@@ -148,16 +154,21 @@ install:
 	@install -D -g 0 -o 0 -m 0644 $(MANFILE) $(MAN_TARGET)
 	@gzip --force $(MAN_TARGET)/$(PACKAGE_NAME).1
 	@echo "[$(PACKAGE_NAME)] - installed to $$(which $(PACKAGE_NAME))"
+	@printf "%`tput cols`s"|tr ' ' '-'
 
 uninstall:
+	@printf "%`tput cols`s"|tr ' ' '-'
 	@rm -rf $(bindir)/$(PACKAGE_NAME)
 	@rm -rf $(MAN_TARGET)/$(PACKAGE_NAME).*
 	@rm -rf $(LOCALE_TARGET)/$(PACKAGE_NAME)
 	@echo "[$(PACKAGE_NAME)] - uninstalled"
+	@printf "%`tput cols`s"|tr ' ' '-'
 
 check:
+	@printf "%`tput cols`s"|tr ' ' '-'
 	@test $$($(BINDIR)/$(PACKAGE_NAME) -l20 -ds | wc -m) == '21' && echo $(ONELINEOKMSG) || echo $(ONELINEERRMSG)
 	@test $$($(BINDIR)/$(PACKAGE_NAME) -l20 -ds -c5 | wc -l) == '5' && echo $(MULTILINEOKMSG) || echo $(MULTILINEERRMSG)
+	@printf "%`tput cols`s"|tr ' ' '-'
 
 # Сканирует исходники на предмет использования gettext
 # и создает файл локализации ./locale/*/passgen.po.
@@ -165,19 +176,19 @@ check:
 # сохраняя резервную копию.
 elang:
 	@for localedir in $(LOCALES); do \
+		[ -f $$localedir/$(LOCALE_PO) ] || touch $$localedir/$(LOCALE_PO) && \
 		[ -d $$localedir/$(LC_MESSAGES) ] || mkdir -p $$localedir/$(LC_MESSAGES) && \
 		[ -f $$localedir/$(LC_MESSAGES)/$(LOCALE_PO) ] || touch $$localedir/$(LC_MESSAGES)/$(LOCALE_PO) && \
 		xgettext \
 		--no-wrap \
 		--force-po \
 		--add-location \
-		--join-existing \
 		--copyright-holder=$(PACKAGE_AUTHOR) \
 		--msgid-bugs-address=$(PACKAGE_EMAIL) \
 		--default-domain=$(PACKAGE_NAME) \
 		--package-name=$(PACKAGE_NAME) \
 		--package-version=$(PACKAGE_VERSION) \
-		--output-dir=/tmp \
+		--output-dir=$$localedir \
 		--language=C \
 		--from-code=$(CHARSET) \
 		--keyword=_ \
@@ -185,11 +196,16 @@ elang:
 		msginit \
 		--no-wrap \
 		--no-translator \
-		--input=/tmp/$(LOCALE_PO) \
+		--input=$$localedir/$(LOCALE_PO) \
 		--output-file=$$localedir/$(LC_MESSAGES)/$(LOCALE_PO) \
-		--locale=$$(basename $$localedir).$(CHARSET) && \
-		echo -e "Translate $$localedir/$(LC_MESSAGES)/$(LOCALE_PO) and run command\n\n\t$ make glang"; \
+		--locale=$$(basename $$localedir).$(CHARSET);\
 	done
+	@printf "%`tput cols`s"|tr ' ' '-'
+	@for localedir in $(LOCALES); do \
+		echo "Translate file: $$localedir/$(LC_MESSAGES)/$(LOCALE_PO)"; \
+	done
+	@echo -e "Before translated run command:\n\t$$ make glang\n"
+	@printf "%`tput cols`s"|tr ' ' '-'
 
 # Создает файл локализации ./locale/*/LC_MESSAGES/passgen.mo
 glang:
@@ -200,7 +216,9 @@ glang:
 	done
 
 help:
+	@printf "%`tput cols`s"|tr ' ' '-'
 	@echo -e "`cat ./resource/make/help`"
+	@printf "%`tput cols`s"|tr ' ' '-'
 
 # Генерируем файл README.md и вставляем в него актуальную информацию
 autodoc:

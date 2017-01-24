@@ -39,6 +39,8 @@ void help(int *length)
 	printf("\t$ %s -l25 -P123abc          # %s\n", PACKAGE_NAME, _("Use symbols '123abc' only"));
 	printf("\t$ %s -l25 -P123abc -e       # %s\n", PACKAGE_NAME, _("Use symbols '123abc' with space"));
 	printf("\t$ %s -l25 -c5               # %s\n", PACKAGE_NAME, _("List of the 5 passwords, one per line"));
+	printf("\n");
+	printf("%s <%s>\n", _("On any errors report to the address"), PACKAGE_BUGREPORT);
 	exit(EXIT_SUCCESS);
 }
 

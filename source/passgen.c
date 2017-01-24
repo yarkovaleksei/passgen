@@ -6,7 +6,7 @@
 
 char getChar(char *symbols)
 {
-	return symbols[random () % strlen(symbols)];
+	return symbols[rand () % strlen(symbols)];
 }
 
 
