@@ -9,7 +9,7 @@
 ```bash
 $ git clone https://github.com/yarkovaleksei/passgen.git
 $ cd passgen
-$ ./configure --prefix=/usr/local
+$ ./configure
 $ make
 ```
 

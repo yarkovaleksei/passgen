@@ -14,7 +14,7 @@
 #include <time.h>
 #include <libintl.h> /* gettext */
 
-#include "config.h"
+#include <config.h>
 
 #define ENABLE_NLS 1
 #define _(s) gettext (s)

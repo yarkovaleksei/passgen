@@ -31,7 +31,7 @@ void help(int *length)
 	printf("\t-e, --enable-space               %s\n", _("Add space to the password pattern"));
 	printf("\n");
 	printf("%s:\n", _("Example"));
-	printf("\t$ %s -l0  -u                # %s\n", PACKAGE_NAME, _("Input length from the keyboard"));
+	printf("\t$ %s -l0                    # %s\n", PACKAGE_NAME, _("Input length from the keyboard"));
 	printf("\t$ %s -l25 -d                # %s\n", PACKAGE_NAME, _("Use the lowercase letters only"));
 	printf("\t$ %s -l25 -s                # %s\n", PACKAGE_NAME, _("Use punctuation marks only"));
 	printf("\t$ %s -l25 -dn               # %s\n", PACKAGE_NAME, _("Use lowercase letters and numbers only"));

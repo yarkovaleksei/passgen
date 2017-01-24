@@ -1,4 +1,5 @@
 .fuse_*
+.*~
 bin/
 deb/
 doc-pak/

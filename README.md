@@ -9,7 +9,7 @@
 ```bash
 $ git clone https://github.com/yarkovaleksei/passgen.git
 $ cd passgen
-$ ./configure --prefix=/usr/local
+$ ./configure
 $ make
 ```
 
@@ -69,7 +69,7 @@ $ passgen -h
 	-e, --enable-space               Добавить пробел в шаблон пароля
 
 Примеры использования:
-	$ passgen -l0  -u                # Ввести длину пароля с клавиатуры
+	$ passgen -l0                    # Ввести длину пароля с клавиатуры
 	$ passgen -l25 -d                # Использовать только английские буквы в нижнем регистре
 	$ passgen -l25 -s                # Использовать только символы и знаки препинания
 	$ passgen -l25 -dn               # Использовать только английские буквы в нижнем регистре и цифры
@@ -85,8 +85,8 @@ $ passgen -h
 *Поддерживается русская и английская локализация*
 
 ```bash
-$ LANG=ru_RU ./bin/passgen -h
-$ LANG=en_US ./bin/passgen -h
+$ LANG=ru_RU passgen -h
+$ LANG=en_US passgen -h
 ```
 
 *Если нужная локализация не найдена, то будет использована английская*
@@ -109,15 +109,5 @@ $ sudo dpkg -r passgen
 
 ```bash
 $ make help
-Usage make:
- 	make                               - build binary file from source
- 	make clean                         - clean project folder from *.o, ./bin, etc.
- 	make distclean                     - clean project folder from ./configure created
- 	make check                         - run binary with test parameters
- 	make elang                         - extract localize phrases from source to *.po
- 	make glang                         - create localize *.mo file from *.po files
- 	make autodoc                       - generate README.md
- 	sudo make build install=<yes|no>   - build deb package
- 	sudo make install                  - install binary to /usr/local/bin
- 	sudo make uninstall                - uninstall binary from /usr/local/bin
+
 ```
