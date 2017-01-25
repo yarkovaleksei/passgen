@@ -3,9 +3,7 @@ Usage make:
     make clean                         - clean project folder of *.o, ./bin, etc.
     make distclean                     - clean project folder of ./configure created files
     make check                         - run binary with test parameters
-    make elang                         - extract localize phrases from source to *.po
-    make glang                         - create localize *.mo file from *.po files
     make autodoc                       - generate README.md
-    sudo make build install=<yes|no>   - build deb package
+    sudo make build install=<yes|no>   - build package
     sudo make install                  - install binary
     sudo make uninstall                - uninstall binary

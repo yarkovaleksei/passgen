@@ -1,0 +1,123 @@
+#!/bin/bash
+
+
+set -e
+
+ARGS=
+SCRIPT_NAME=$(basename $0)
+SCRIPT_VERSION="1.0.0"
+SCRIPT_HASH=$(md5sum ${SCRIPT_NAME} | awk '{print $1}')
+
+# Error exit codes
+ERR_UNCAUGHT=1      # Uncaught error
+ERR_NOT_ARGS=10     # Calling the script with no arguments
+ERR_FAIL_GETOPT=20  # Error parsing arguments
+ERR_SET_ARG=30      # Retransmission argument
+
+LOCALEDIR=./locale
+SRCDIR=./source
+LOCALES=$(find ${LOCALEDIR} -mindepth 1 -maxdepth 1 -type d)
+
+############################################################
+
+function err_exit(){
+	local msg=$2
+	local code=$1
+	if [ "$msg" ]; then
+		echo
+		echo -e "$msg"
+		echo
+	else
+		print_help;
+	fi
+	if [ "$code" ]; then
+		exit $code
+	else
+		exit ${ERR_UNCAUGHT}
+	fi
+}
+
+function print_help() {
+	echo '
+Help for '"${SCRIPT_NAME}" v"${SCRIPT_VERSION}"'
+
+ARGUMENTS:
+	-h[--help]          Display this help and exit
+	-e[--extract]       Extract phrases from source files to template file
+	-g[--generate]      Generate *.mo file from template
+'
+}
+
+KEY_EXTRACT=0
+KEY_GENERATE=0
+
+function extract_phrases(){
+	for ldir in ${LOCALES}; do
+		[ -f ${ldir}/@PACKAGE_NAME@.po ] || touch ${ldir}/@PACKAGE_NAME@.po
+		[ -d ${ldir}/LC_MESSAGES ] || mkdir -p ${ldir}/LC_MESSAGES
+		[ -f ${ldir}/LC_MESSAGES/@PACKAGE_NAME@.po ] || touch ${ldir}/LC_MESSAGES/@PACKAGE_NAME@.po
+
+		xgettext --no-wrap --add-location --join-existing --copyright-holder="@PACKAGE_AUTHOR@" --msgid-bugs-address="@PACKAGE_EMAIL@" --default-domain="@PACKAGE_NAME@" --package-name="@PACKAGE_NAME@" --package-version="@PACKAGE_VERSION@" --output-dir=${ldir} --language=C --from-code=UTF-8 --keyword=_ ${SRCDIR}/*.c ${SRCDIR}/**/*.h
+
+		msginit --no-wrap --no-translator --input=${ldir}/@PACKAGE_NAME@.po --output-file=${ldir}/LC_MESSAGES/@PACKAGE_NAME@.po --locale=$(basename ${ldir}).UTF-8
+	done
+	printf "%`tput cols`s"|tr ' ' '-'
+	for ldir in ${LOCALES}; do \
+		echo "Translate file: ${ldir}/LC_MESSAGES/@PACKAGE_NAME@.po"; \
+	done
+	echo -e "Before translated run command:\n\t${SCRIPT_NAME} --generate\n"
+	printf "%`tput cols`s"|tr ' ' '-'
+
+}
+
+function generate_mo() {
+	printf "%`tput cols`s"|tr ' ' '-'
+	for ldir in ${LOCALES}; do
+		local target=${ldir}/LC_MESSAGES/@PACKAGE_NAME@.mo
+		msgfmt ${ldir}/LC_MESSAGES/@PACKAGE_NAME@.po --output-file=${target}
+		[ -f "${target}" ] && echo "Generated file: ${target}" || err_exit 1 "Dont create file: ${target}!";
+	done
+	printf "%`tput cols`s"|tr ' ' '-'
+}
+
+function parse_args(){
+	ARGS=$(getopt -o heg --long help,extract,generate -- "$@")
+	if [ $? != 0 ] ; then
+	  err_exit ${ERR_FAIL_GETOPT} "Shutdown script ${SCRIPT_NAME}!";
+	fi
+	eval set -- "$ARGS"
+}
+
+if [ "$#" -eq 0 ]; then
+	err_exit ${ERR_NOT_ARGS} "Requires at least one argument!";
+fi
+
+parse_args;
+
+while true; do
+	case "$1" in
+		-h | --help )       print_help;
+							exit 0;
+					;;
+		-e | --extract )    KEY_EXTRACT=1;
+							shift;
+					;;
+		-g | --generate )   KEY_GENERATE=1;
+							shift;
+					;;
+		-- )                print_help;
+							exit 0;
+					;;
+		* )                 break;
+					;;
+	esac
+done
+
+
+if [ ${KEY_EXTRACT} -eq 1 ]; then
+	extract_phrases;
+fi
+
+if [ ${KEY_GENERATE} -eq 1 ]; then
+	generate_mo;
+fi

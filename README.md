@@ -64,13 +64,14 @@ $ passgen -h
 Используемые ключи:
 	-h, --help                       Справочная информация
 	-v, --version                    Номер версии релиза
-	-l, --length                     Длина пароля. Если не указан, то
+
+	-l, --length=LENGTH              Длина пароля. Если не указан, то
 	                                 он будет установлен в 25. Если указать 0,
 	                                 то программа запросит ввод с клавиатуры.
-	-c, --count                      Количество паролей за один вызов программы.
+	-c, --count=COUNT                Количество паролей за один вызов программы.
 	                                 Полезно, когда надо сгенерировать
 	                                 файл с уникальными строками.
-	-P, --pattern                    Строка, содержащая возможные
+	-P, --pattern=PATTERN            Строка, содержащая возможные
 	                                 символы для генерации пароля.
 	                                 Если ключ указан, то ключи
 	                                 -u, -d, -n, -s будут проигнорированы.
@@ -125,5 +126,43 @@ $ sudo dpkg -r passgen
 
 ```bash
 $ make help
+Usage make:
+    make                               - build binary file from source
+    make clean                         - clean project folder of *.o, ./bin, etc.
+    make distclean                     - clean project folder of ./configure created files
+    make check                         - run binary with test parameters
+    make autodoc                       - generate README.md
+    sudo make build install=<yes|no>   - build package
+    sudo make install                  - install binary
+    sudo make uninstall                - uninstall binary
+```
 
+- - -
+## Локализация программы
+
+**ВНИМАНИЕ!!! Только для тех, кто понимает что делает!**
+
+В каталоге `./locale` лежат файлы локализации программы.
+
+Если вы меняли что-то в исходниках программы, то чтобы обновить языковые файлы, надо выполнить команду:
+
+```bash
+$ ./translate.sh --extract
+```
+
+Далее следует отредактировать файлы, путь к которым появится на экране, и выполнить команду:
+
+```bash
+$ ./translate.sh --generate
+```
+
+Отлично! Теперь можно переустановить пакет с обновленными языковыми файлами.
+
+## Добавить перевод
+
+
+Чтобы добавить перевод надо создать в каталоге `./locale` папку с именем в формате [ll_CC](https://docs.moodle.org/dev/Table_of_locales) и выполнить команду:
+
+```bash
+$ ./translate.sh --extract
 ```

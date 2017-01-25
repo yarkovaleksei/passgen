@@ -1,47 +1,47 @@
 .\" Manpage for passgen.
 .\" Contact yarkov_aleksei@mail.ru to correct errors or typos.
-.TH man 1 "25 Jan 2017" "1.0.0" "passgen man page"
+.TH man 1 "26 Jan 2017" "1.0.0" "passgen man page"
 .SH NAME
-	passgen \- Console password generator
+    passgen \- Console password generator
 .SH SYNOPSIS
-	passgen [-h|--help]
-	passgen [-v|--version]
-	passgen [-l|--length] [-c|--count] [-P|--pattern] [-e|--enable-space]
-	passgen [-l|--length] [-c|--count] [-u|--letter-up] [-d|--letter-down] [-n|--number] [-s|--symbol] [-e|--enable-space]
+    passgen [-h|--help]
+    passgen [-v|--version]
+    passgen [-l|--length] [-c|--count] [-P|--pattern] [-e|--enable-space]
+    passgen [-l|--length] [-c|--count] [-u|--letter-up] [-d|--letter-down] [-n|--number] [-s|--symbol] [-e|--enable-space]
 .SH DESCRIPTION
-	-h, --help                       Help information
-	-v, --version                    Package version
-	-l, --length                     Password length. If not specified,
-									 it will be set to 25. If set to 0,
-									 the program will ask for input from the keyboard.
-	-c, --count                      The amount for one time passwords.
-									 It is useful when you need to create
-									 a file with a unique string.
-	-P, --pattern                    A string containing the possible
-									 characters in the password.
-									 If the key is specified, the keys
-									 -u, -d, -n, -s will be ignored.
-	-u, --letter-up                  Use uppercase letters in the password
-	-d, --letter-down                Use lowercase letters in the password
-	-n, --number                     Use the numbers in the password
-	-s, --symbol                     Use punctuation to the password
-	-e, --enable-space               Add space to the password pattern
-.SH EXAMPLE
-	$ passgen -l0                    # Input length from the keyboard
-	$ passgen -l25 -d                # Use the lowercase letters only
-	$ passgen -l25 -s                # Use punctuation marks only
-	$ passgen -l25 -dn               # Use lowercase letters and numbers only
-	$ passgen -l25 -du               # Use lowercase and uppercase letters only
-	$ passgen -l25 -P123abc          # Use symbols '123abc' only
-	$ passgen -l25 -P123abc -e       # Use symbols '123abc' with space
-	$ passgen -l25 -c5               # List of the 5 passwords, one per line
+    passgen \- Console password generator. Depending on the parameters program returns one or more strings of random characters.
 .SH OPTIONS
-	The passgen does not take any options.
+    -h, --help                       Help information
+    -v, --version                    Package version
+    -l, --length                     Password length. If not specified,
+                                     it will be set to 25. If set to 0,
+                                     the program will ask for input from the keyboard.
+    -c, --count                      The amount for one time passwords.
+                                     It is useful when you need to create
+                                     a file with a unique string.
+    -P, --pattern                    A string containing the possible
+                                     characters in the password.
+                                     If the key is specified, the keys
+                                     -u, -d, -n, -s will be ignored.
+    -u, --letter-up                  Use uppercase letters in the password
+    -d, --letter-down                Use lowercase letters in the password
+    -n, --number                     Use the numbers in the password
+    -s, --symbol                     Use punctuation to the password
+    -e, --enable-space               Add space to the password pattern
+.SH EXAMPLE
+    $ passgen -l0                    # Input length from the keyboard
+    $ passgen -l25 -d                # Use the lowercase letters only
+    $ passgen -l25 -s                # Use punctuation marks only
+    $ passgen -l25 -dn               # Use lowercase letters and numbers only
+    $ passgen -l25 -du               # Use lowercase and uppercase letters only
+    $ passgen -l25 -P123abc          # Use symbols '123abc' only
+    $ passgen -l25 -P123abc -e       # Use symbols '123abc' with space
+    $ passgen -l25 -c5               # List of the 5 passwords, one per line
 .SH BUGS
-	On any errors report to the address <yarkov_aleksei@mail.ru>
+    On any errors report to the address <yarkov_aleksei@mail.ru>
 .SH AUTHOR
-	Yarkov Aleksey (yarkov_aleksei@mail.ru)
+    Yarkov Aleksey (yarkov_aleksei@mail.ru)
 .SH SEE ALSO
-	Get more information on project page:
+    Get more information on project page:
 
-	https://github.com/yarkovaleksei/passgen
+    https://github.com/yarkovaleksei/passgen

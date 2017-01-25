@@ -8,144 +8,149 @@ msgid ""
 msgstr ""
 "Project-Id-Version: passgen 1.0.0\n"
 "Report-Msgid-Bugs-To: yarkov_aleksei@mail.ru\n"
-"POT-Creation-Date: 2017-01-25 00:35+0300\n"
+"POT-Creation-Date: 2017-01-25 23:24+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: source/main.c:111
+#: source/main.c:68 source/main.c:76 source/main.c:68 source/main.c:76
 #, c-format
-msgid "One of the arguments %s is mandatory"
+msgid "Option %s must be a number!"
+msgstr "Аргумент должен быть числом!"
+
+#: source/main.c:130 source/main.c:130
+#, c-format
+msgid "One of the arguments %s, %s, %s, %s, %s is mandatory"
 msgstr "Один из аргументов %s надо указать обязательно"
 
-#: source/passgen.c:20
+#: source/passgen.c:23 source/passgen.c:23
 msgid "Type in a password length"
 msgstr "Укажите длину пароля"
 
-#: source/print.c:9
+#: source/print.c:10 source/print.c:10
 msgid "Console password generator"
 msgstr "Консольный генератор паролей"
 
-#: source/print.c:11
+#: source/print.c:12 source/print.c:12
 msgid "Default values"
 msgstr "Параметры по-умолчанию"
 
-#: source/print.c:12
+#: source/print.c:13 source/print.c:13
 msgid "Password length"
 msgstr "Длина пароля"
 
-#: source/print.c:14
+#: source/print.c:15 source/print.c:15
 msgid "Usage keys"
 msgstr "Используемые ключи"
 
-#: source/print.c:15
+#: source/print.c:16 source/print.c:16
 msgid "Help information"
 msgstr "Справочная информация"
 
-#: source/print.c:16
+#: source/print.c:17 source/print.c:17
 msgid "Package version"
 msgstr "Номер версии релиза"
 
-#: source/print.c:17
+#: source/print.c:19 source/print.c:19
 msgid "Password length. If not specified,"
 msgstr "Длина пароля. Если не указан, то"
 
-#: source/print.c:18
+#: source/print.c:20 source/print.c:20
 msgid "it will be set to 25. If set to 0,"
 msgstr "он будет установлен в 25. Если указать 0,"
 
-#: source/print.c:19
+#: source/print.c:21 source/print.c:21
 msgid "the program will ask for input from the keyboard."
 msgstr "то программа запросит ввод с клавиатуры."
 
-#: source/print.c:20
+#: source/print.c:22 source/print.c:22
 msgid "The amount for one time passwords."
 msgstr "Количество паролей за один вызов программы."
 
-#: source/print.c:21
+#: source/print.c:23 source/print.c:23
 msgid "It is useful when you need to create"
 msgstr "Полезно, когда надо сгенерировать"
 
-#: source/print.c:22
+#: source/print.c:24 source/print.c:24
 msgid "a file with a unique string."
 msgstr "файл с уникальными строками."
 
-#: source/print.c:23
+#: source/print.c:25 source/print.c:25
 msgid "A string containing the possible"
 msgstr "Строка, содержащая возможные"
 
-#: source/print.c:24
+#: source/print.c:26 source/print.c:26
 msgid "characters in the password."
 msgstr "символы для генерации пароля."
 
-#: source/print.c:25
+#: source/print.c:27 source/print.c:27
 msgid "If the key is specified, the keys"
 msgstr "Если ключ указан, то ключи"
 
-#: source/print.c:26
+#: source/print.c:28 source/print.c:28
 msgid "will be ignored."
 msgstr "будут проигнорированы."
 
-#: source/print.c:27
+#: source/print.c:29 source/print.c:29
 msgid "Use uppercase letters in the password"
 msgstr "Использовать английские буквы в верхнем регистре"
 
-#: source/print.c:28
+#: source/print.c:30 source/print.c:30
 msgid "Use lowercase letters in the password"
 msgstr "Использовать английские буквы в нижнем регистре"
 
-#: source/print.c:29
+#: source/print.c:31 source/print.c:31
 msgid "Use the numbers in the password"
 msgstr "Использовать цифры"
 
-#: source/print.c:30
+#: source/print.c:32 source/print.c:32
 msgid "Use punctuation to the password"
 msgstr "Использовать символы и знаки препинания"
 
-#: source/print.c:31
+#: source/print.c:33 source/print.c:33
 msgid "Add space to the password pattern"
 msgstr "Добавить пробел в шаблон пароля"
 
-#: source/print.c:33
+#: source/print.c:35 source/print.c:35
 msgid "Example"
 msgstr "Примеры использования"
 
-#: source/print.c:34
+#: source/print.c:36 source/print.c:36
 msgid "Input length from the keyboard"
 msgstr "Ввести длину пароля с клавиатуры"
 
-#: source/print.c:35
+#: source/print.c:37 source/print.c:37
 msgid "Use the lowercase letters only"
 msgstr "Использовать только английские буквы в нижнем регистре"
 
-#: source/print.c:36
+#: source/print.c:38 source/print.c:38
 msgid "Use punctuation marks only"
 msgstr "Использовать только символы и знаки препинания"
 
-#: source/print.c:37
+#: source/print.c:39 source/print.c:39
 msgid "Use lowercase letters and numbers only"
 msgstr "Использовать только английские буквы в нижнем регистре и цифры"
 
-#: source/print.c:38
+#: source/print.c:40 source/print.c:40
 msgid "Use lowercase and uppercase letters only"
 msgstr "Использовать только английские буквы в нижнем и верхнем регистре"
 
-#: source/print.c:39
+#: source/print.c:41 source/print.c:41
 msgid "Use symbols '123abc' only"
 msgstr "Использовать только перечисленные символы: '123abc'"
 
-#: source/print.c:40
+#: source/print.c:42 source/print.c:42
 msgid "Use symbols '123abc' with space"
 msgstr "Использовать только перечисленные символы: '123abc' и пробел"
 
-#: source/print.c:41
+#: source/print.c:43 source/print.c:43
 msgid "List of the 5 passwords, one per line"
 msgstr "Список из 5 паролей, по одному в строке"
 
-#: source/print.c:43
+#: source/print.c:45 source/print.c:45
 msgid "On any errors report to the address"
 msgstr "Об ошибках сообщайте по адресу"

@@ -1,18 +1,26 @@
 /* main.c */
 
 #include "h/main.h"
+#include "h/arguments.h"
 #include "h/passgen.h"
 #include "h/print.h"
+#include "h/valid.h"
 
 
 int main (int argc, char * const argv[], char * const argp[])
 {
 	srand((unsigned) time(NULL) * getpid());
 	setlocale(LC_ALL, "");
-	bindtextdomain(PACKAGE_NAME, PACKAGE_LOCALE_DIR);
+
+	#ifdef PACKAGE_LOCALE_DIR
+		bindtextdomain(PACKAGE_NAME, PACKAGE_LOCALE_DIR);
+	#else
+		#error Please use flag -DPACKAGE_LOCALE_DIR="path/to/locales/dir"!
+	#endif
+
 	textdomain(PACKAGE_NAME);
 
-	int length = 25;
+	int length = DEFAULT_PASSWORD_LENGTH;
 	int count = 1;
 	int usePattern = 0;
 	char *password;
@@ -23,18 +31,19 @@ int main (int argc, char * const argv[], char * const argp[])
 	char *source = malloc(strlen(LETTERS_UP) + strlen(LETTERS_DOWN) + strlen(NUMBER) + strlen(SYMBOL) + 2);
 	int iargs=0;
 	int option_index;
+
 	const char *short_options = "hvl:c:P:udnse";
 	const struct option long_options[] = {
-		{"help", optional_argument, NULL, 'h'},
-		{"version", optional_argument, NULL, 'v'},
-		{"length", required_argument, NULL, 'l'},
-		{"count", required_argument, NULL, 'c'},
-		{"pattern", required_argument, NULL, 'P'},
-		{"letter-up", optional_argument, NULL, 'u'},
-		{"letter-down", optional_argument, NULL, 'd'},
-		{"number", optional_argument, NULL, 'n'},
-		{"symbol", optional_argument, NULL, 's'},
-		{"enable-space", optional_argument, NULL, 'e'},
+		{ArgKeys[0].name, optional_argument, NULL, ArgKeys[0].sname},
+		{ArgKeys[1].name, optional_argument, NULL, ArgKeys[1].sname},
+		{ArgKeys[2].name, required_argument, NULL, ArgKeys[2].sname},
+		{ArgKeys[3].name, required_argument, NULL, ArgKeys[3].sname},
+		{ArgKeys[4].name, required_argument, NULL, ArgKeys[4].sname},
+		{ArgKeys[5].name, optional_argument, NULL, ArgKeys[5].sname},
+		{ArgKeys[6].name, optional_argument, NULL, ArgKeys[6].sname},
+		{ArgKeys[7].name, optional_argument, NULL, ArgKeys[7].sname},
+		{ArgKeys[8].name, optional_argument, NULL, ArgKeys[8].sname},
+		{ArgKeys[9].name, optional_argument, NULL, ArgKeys[9].sname},
 		{NULL, 0, NULL, 0}
 	};
 
@@ -46,16 +55,26 @@ int main (int argc, char * const argv[], char * const argp[])
 		switch (iargs)
 		{
 			case 'h':
-				Print.help(&length);
+				Print.help();
 				break;
 			case 'v':
 				Print.version();
 				break;
 			case 'l':
-				sscanf(optarg, "%d", &length);
+				if(isNumber(optarg) == 1)
+				{
+					sscanf(optarg, "%d", &length);
+				} else {
+					Print.error(_("Option %s must be a number!"), ArgKeys[2].manstr);
+				}
 				break;
 			case 'c':
-				sscanf(optarg, "%d", &count);
+				if(isNumber(optarg) == 1)
+				{
+					sscanf(optarg, "%d", &count);
+				} else {
+					Print.error(_("Option %s must be a number!"), ArgKeys[3].manstr);
+				}
 				break;
 			case 'P':
 				usePattern = 1;
@@ -63,19 +82,19 @@ int main (int argc, char * const argv[], char * const argp[])
 				strcat(source, optarg);
 				break;
 			case 'u':
-				if (usePattern == 0)
+				if (usePattern != 1)
 					strcat(source, LETTERS_UP);
 				break;
 			case 'd':
-				if (usePattern == 0)
+				if (usePattern != 1)
 					strcat(source, LETTERS_DOWN);
 				break;
 			case 'n':
-				if (usePattern == 0)
+				if (usePattern != 1)
 					strcat(source, NUMBER);
 				break;
 			case 's':
-				if (usePattern == 0)
+				if (usePattern != 1)
 					strcat(source, SYMBOL);
 				break;
 			case 'e':
@@ -108,7 +127,7 @@ int main (int argc, char * const argv[], char * const argp[])
 			count--;
 		}
 	} else {
-		Print.echo(_("One of the arguments %s is mandatory"), "-u[--letter-up], -d[--letter-down], -n[--number], -s[--symbol], -P[--pattern]");
+		Print.echo(_("One of the arguments %s, %s, %s, %s, %s is mandatory"), ArgKeys[4].manstr, ArgKeys[5].manstr, ArgKeys[6].manstr, ArgKeys[7].manstr, ArgKeys[8].manstr);
 		exit(EXIT_FAILURE);
 	}
 

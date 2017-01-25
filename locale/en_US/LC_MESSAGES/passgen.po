@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: passgen 1.0.0\n"
 "Report-Msgid-Bugs-To: yarkov_aleksei@mail.ru\n"
-"POT-Creation-Date: 2017-01-25 00:35+0300\n"
-"PO-Revision-Date: 2017-01-25 00:35+0300\n"
+"POT-Creation-Date: 2017-01-25 23:24+0300\n"
+"PO-Revision-Date: 2017-01-25 23:24+0300\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: en_US\n"
@@ -17,135 +17,145 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: source/main.c:111
+#: source/main.c:68 source/main.c:76
 #, c-format
-msgid "One of the arguments %s is mandatory"
-msgstr "One of the arguments %s is mandatory"
+msgid "Option %s must be a number!"
+msgstr "Option %s must be a number!"
 
-#: source/passgen.c:20
+#: source/main.c:130
+#, c-format
+msgid "One of the arguments %s, %s, %s, %s, %s is mandatory"
+msgstr "One of the arguments %s, %s, %s, %s, %s is mandatory"
+
+#: source/passgen.c:23
 msgid "Type in a password length"
 msgstr "Type in a password length"
 
-#: source/print.c:9
+#: source/print.c:10
 msgid "Console password generator"
 msgstr "Console password generator"
 
-#: source/print.c:11
+#: source/print.c:12
 msgid "Default values"
 msgstr "Default values"
 
-#: source/print.c:12
+#: source/print.c:13
 msgid "Password length"
 msgstr "Password length"
 
-#: source/print.c:14
+#: source/print.c:15
 msgid "Usage keys"
 msgstr "Usage keys"
 
-#: source/print.c:15
+#: source/print.c:16
 msgid "Help information"
 msgstr "Help information"
 
-#: source/print.c:16
+#: source/print.c:17
 msgid "Package version"
 msgstr "Package version"
 
-#: source/print.c:17
+#: source/print.c:19
 msgid "Password length. If not specified,"
 msgstr "Password length. If not specified,"
 
-#: source/print.c:18
+#: source/print.c:20
 msgid "it will be set to 25. If set to 0,"
 msgstr "it will be set to 25. If set to 0,"
 
-#: source/print.c:19
+#: source/print.c:21
 msgid "the program will ask for input from the keyboard."
 msgstr "the program will ask for input from the keyboard."
 
-#: source/print.c:20
+#: source/print.c:22
 msgid "The amount for one time passwords."
 msgstr "The amount for one time passwords."
 
-#: source/print.c:21
+#: source/print.c:23
 msgid "It is useful when you need to create"
 msgstr "It is useful when you need to create"
 
-#: source/print.c:22
+#: source/print.c:24
 msgid "a file with a unique string."
 msgstr "a file with a unique string."
 
-#: source/print.c:23
+#: source/print.c:25
 msgid "A string containing the possible"
 msgstr "A string containing the possible"
 
-#: source/print.c:24
+#: source/print.c:26
 msgid "characters in the password."
 msgstr "characters in the password."
 
-#: source/print.c:25
+#: source/print.c:27
 msgid "If the key is specified, the keys"
 msgstr "If the key is specified, the keys"
 
-#: source/print.c:26
+#: source/print.c:28
 msgid "will be ignored."
 msgstr "will be ignored."
 
-#: source/print.c:27
+#: source/print.c:29
 msgid "Use uppercase letters in the password"
 msgstr "Use uppercase letters in the password"
 
-#: source/print.c:28
+#: source/print.c:30
 msgid "Use lowercase letters in the password"
 msgstr "Use lowercase letters in the password"
 
-#: source/print.c:29
+#: source/print.c:31
 msgid "Use the numbers in the password"
 msgstr "Use the numbers in the password"
 
-#: source/print.c:30
+#: source/print.c:32
 msgid "Use punctuation to the password"
 msgstr "Use punctuation to the password"
 
-#: source/print.c:31
+#: source/print.c:33
 msgid "Add space to the password pattern"
 msgstr "Add space to the password pattern"
 
-#: source/print.c:33
+#: source/print.c:35
 msgid "Example"
 msgstr "Example"
 
-#: source/print.c:34
+#: source/print.c:36
 msgid "Input length from the keyboard"
 msgstr "Input length from the keyboard"
 
-#: source/print.c:35
+#: source/print.c:37
 msgid "Use the lowercase letters only"
 msgstr "Use the lowercase letters only"
 
-#: source/print.c:36
+#: source/print.c:38
 msgid "Use punctuation marks only"
 msgstr "Use punctuation marks only"
 
-#: source/print.c:37
+#: source/print.c:39
 msgid "Use lowercase letters and numbers only"
 msgstr "Use lowercase letters and numbers only"
 
-#: source/print.c:38
+#: source/print.c:40
 msgid "Use lowercase and uppercase letters only"
 msgstr "Use lowercase and uppercase letters only"
 
-#: source/print.c:39
+#: source/print.c:41
 msgid "Use symbols '123abc' only"
 msgstr "Use symbols '123abc' only"
 
-#: source/print.c:40
+#: source/print.c:42
 msgid "Use symbols '123abc' with space"
 msgstr "Use symbols '123abc' with space"
 
-#: source/print.c:41
+#: source/print.c:43
 msgid "List of the 5 passwords, one per line"
 msgstr "List of the 5 passwords, one per line"
 
-#: source/print.c:43
+#: source/print.c:45
 msgid "On any errors report to the address"
 msgstr "On any errors report to the address"
+
+#: source/main.c:76
+#, c-format
+msgid "This Option %s must be a number!"
+msgstr "This Option %s must be a number!"
