@@ -43,10 +43,10 @@ $ sudo make build install=yes
 Если указать `install=no` или просто опустить параметр `install`, то пакет будет собран в каталог **build**, но установки не прозойдет.
 
 - - -
-## Установка deb пакета вручную
+## Установка собранного пакета вручную
 
 ```bash
-$ sudo dpkg -i ./deb/passgen*.deb
+$ sudo dpkg -i ./build/passgen*.deb
 ```
 
 - - -
