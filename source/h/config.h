@@ -1,5 +1,5 @@
 /* source/h/config.h.  Generated from config.h.in by configure.  */
-/* resource/in/config.h.in.  Generated from configure.ac by autoheader.  */
+/* resource/config.h.in.  Generated from configure.ac by autoheader.  */
 
 /* Define to 1 if you have the <stdlib.h> header file. */
 /* #undef HAVE_STDLIB_H */

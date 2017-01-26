@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: passgen 1.0.0\n"
 "Report-Msgid-Bugs-To: yarkov_aleksei@mail.ru\n"
-"POT-Creation-Date: 2017-01-25 23:24+0300\n"
+"POT-Creation-Date: 2017-01-26 22:39+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,14 +17,14 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: source/main.c:68 source/main.c:76 source/main.c:68 source/main.c:76
+#: source/main.c:68 source/main.c:76
 #, c-format
 msgid "Option %s must be a number!"
 msgstr ""
 
-#: source/main.c:130 source/main.c:130
+#: source/main.c:131
 #, c-format
-msgid "One of the arguments %s, %s, %s, %s, %s is mandatory"
+msgid "One of the arguments %s is mandatory"
 msgstr ""
 
 #: source/passgen.c:23 source/passgen.c:23
@@ -155,7 +155,6 @@ msgstr ""
 msgid "On any errors report to the address"
 msgstr ""
 
-#: source/main.c:76
-#, c-format
-msgid "This Option %s must be a number!"
+#: source/print.c:47
+msgid "Get more information on project page"
 msgstr ""

@@ -11,7 +11,7 @@ test $(which passgen) != "" && sudo dpkg -r passgen
 # Ставим свежий пакет
 sudo make build install=yes
 # Генерируем README.md
-make autodoc
+make doc
 # Очищаем папку проекта от лишнего
 make clean && make distclean
 

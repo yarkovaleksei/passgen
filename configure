@@ -1791,7 +1791,7 @@ $as_echo "#define PACKAGE_LICENSE \"MIT\"" >>confdefs.h
 
 
 
-ac_config_headers="$ac_config_headers source/h/config.h:resource/in/config.h.in"
+ac_config_headers="$ac_config_headers source/h/config.h:resource/config.h.in"
 
 
 ac_ext=c
@@ -2639,7 +2639,8 @@ done
 
 
 
-ac_config_files="$ac_config_files Makefile:resource/in/Makefile.in man/passgen.1:resource/in/passgen.1.in translate.sh:resource/in/translate.sh.in"
+ac_config_files="$ac_config_files Makefile:resource/make/Makefile.in man/en_US/passgen.1:resource/man/en_US/passgen.1.in man/ru_RU/passgen.1:resource/man/ru_RU/passgen.1.in translate.sh:resource/translate.sh.in"
+
 
 cat >confcache <<\_ACEOF
 # This file is a shell script that caches the results of configure
@@ -3331,10 +3332,11 @@ cat >>$CONFIG_STATUS <<\_ACEOF || ac_write_fail=1
 for ac_config_target in $ac_config_targets
 do
   case $ac_config_target in
-    "source/h/config.h") CONFIG_HEADERS="$CONFIG_HEADERS source/h/config.h:resource/in/config.h.in" ;;
-    "Makefile") CONFIG_FILES="$CONFIG_FILES Makefile:resource/in/Makefile.in" ;;
-    "man/passgen.1") CONFIG_FILES="$CONFIG_FILES man/passgen.1:resource/in/passgen.1.in" ;;
-    "translate.sh") CONFIG_FILES="$CONFIG_FILES translate.sh:resource/in/translate.sh.in" ;;
+    "source/h/config.h") CONFIG_HEADERS="$CONFIG_HEADERS source/h/config.h:resource/config.h.in" ;;
+    "Makefile") CONFIG_FILES="$CONFIG_FILES Makefile:resource/make/Makefile.in" ;;
+    "man/en_US/passgen.1") CONFIG_FILES="$CONFIG_FILES man/en_US/passgen.1:resource/man/en_US/passgen.1.in" ;;
+    "man/ru_RU/passgen.1") CONFIG_FILES="$CONFIG_FILES man/ru_RU/passgen.1:resource/man/ru_RU/passgen.1.in" ;;
+    "translate.sh") CONFIG_FILES="$CONFIG_FILES translate.sh:resource/translate.sh.in" ;;
 
   *) as_fn_error $? "invalid argument: \`$ac_config_target'" "$LINENO" 5;;
   esac

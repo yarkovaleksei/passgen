@@ -15,7 +15,7 @@ int main (int argc, char * const argv[], char * const argp[])
 	#ifdef PACKAGE_LOCALE_DIR
 		bindtextdomain(PACKAGE_NAME, PACKAGE_LOCALE_DIR);
 	#else
-		#error Please use flag -DPACKAGE_LOCALE_DIR="path/to/locales/dir"!
+		#error Please use flag -DPACKAGE_LOCALE_DIR="locale"!
 	#endif
 
 	textdomain(PACKAGE_NAME);
@@ -78,8 +78,7 @@ int main (int argc, char * const argv[], char * const argp[])
 				break;
 			case 'P':
 				usePattern = 1;
-				*source = 0;
-				strcat(source, optarg);
+				sscanf(optarg, "%s", source);
 				break;
 			case 'u':
 				if (usePattern != 1)
@@ -127,8 +126,9 @@ int main (int argc, char * const argv[], char * const argp[])
 			count--;
 		}
 	} else {
-		Print.echo(_("One of the arguments %s, %s, %s, %s, %s is mandatory"), ArgKeys[4].manstr, ArgKeys[5].manstr, ArgKeys[6].manstr, ArgKeys[7].manstr, ArgKeys[8].manstr);
-		exit(EXIT_FAILURE);
+		char s[500];
+		sprintf(s, "%s, %s, %s, %s, %s", ArgKeys[4].manstr, ArgKeys[5].manstr, ArgKeys[6].manstr, ArgKeys[7].manstr, ArgKeys[8].manstr);
+		Print.error(_("One of the arguments %s is mandatory"), s);
 	}
 
 	free(source);

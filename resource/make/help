@@ -1,9 +1,10 @@
 Usage make:
+    make help                          - view this help information
     make                               - build binary file from source
     make clean                         - clean project folder of *.o, ./bin, etc.
     make distclean                     - clean project folder of ./configure created files
     make check                         - run binary with test parameters
-    make autodoc                       - generate README.md
-    sudo make build install=<yes|no>   - build package
+    make doc                           - generate README.md and en_US.man files
+    sudo make build [install=<yes|no>] - build package [and or not install]
     sudo make install                  - install binary
     sudo make uninstall                - uninstall binary

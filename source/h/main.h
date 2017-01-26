@@ -14,7 +14,6 @@
 #include <errno.h>
 
 #define ENABLE_NLS 1
-/* Source: <libintl.h> */
 #define _(s) gettext (s)
 
 #endif /* __MAIN__ */
@@ -26,11 +25,3 @@
 #ifndef DEFAULT_PASSWORD_LENGTH
 	#define DEFAULT_PASSWORD_LENGTH 25
 #endif
-
-/*
-#ifdef HAVE_LIBLIBCRYPT
-	#include <crypt.h>
-#else
-	#error Please install libcrypt-dev before compilation!
-#endif
-*/

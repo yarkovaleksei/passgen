@@ -20,7 +20,7 @@ AC_DEFINE(PACKAGE_DESCRIPTION, "Console password generator", [Define to the pack
 AC_DEFINE(PACKAGE_LICENSE, "MIT", [Define to the package license])
 
 AC_CONFIG_SRCDIR([source/main.c])
-AC_CONFIG_HEADER([source/h/config.h:resource/in/config.h.in])
+AC_CONFIG_HEADER([source/h/config.h:resource/config.h.in])
 
 AC_PROG_CC
 
@@ -44,5 +44,6 @@ AC_CHECK_HEADERS([stdlib.h],
                     [getopt.h])
 
 
-AC_CONFIG_FILES([Makefile:resource/in/Makefile.in man/passgen.1:resource/in/passgen.1.in translate.sh:resource/in/translate.sh.in ])
+AC_CONFIG_FILES([Makefile:resource/make/Makefile.in man/en_US/passgen.1:resource/man/en_US/passgen.1.in man/ru_RU/passgen.1:resource/man/ru_RU/passgen.1.in translate.sh:resource/translate.sh.in])
+
 AC_OUTPUT

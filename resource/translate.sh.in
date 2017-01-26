@@ -5,8 +5,6 @@ set -e
 
 ARGS=
 SCRIPT_NAME=$(basename $0)
-SCRIPT_VERSION="1.0.0"
-SCRIPT_HASH=$(md5sum ${SCRIPT_NAME} | awk '{print $1}')
 
 # Error exit codes
 ERR_UNCAUGHT=1      # Uncaught error
@@ -17,6 +15,7 @@ ERR_SET_ARG=30      # Retransmission argument
 LOCALEDIR=./locale
 SRCDIR=./source
 LOCALES=$(find ${LOCALEDIR} -mindepth 1 -maxdepth 1 -type d)
+BACKUPFILE="locales_backup_`date +%d-%m-%Y`.zip"
 
 ############################################################
 
@@ -39,7 +38,10 @@ function err_exit(){
 
 function print_help() {
 	echo '
-Help for '"${SCRIPT_NAME}" v"${SCRIPT_VERSION}"'
+Help for '"${SCRIPT_NAME}"'
+
+Use this script for create and generate locale files
+for @PACKAGE_NAME@ v@PACKAGE_VERSION@
 
 ARGUMENTS:
 	-h[--help]          Display this help and exit
@@ -77,6 +79,8 @@ function generate_mo() {
 		msgfmt ${ldir}/LC_MESSAGES/@PACKAGE_NAME@.po --output-file=${target}
 		[ -f "${target}" ] && echo "Generated file: ${target}" || err_exit 1 "Dont create file: ${target}!";
 	done
+	(cd ${LOCALEDIR} && zip -ru ./${BACKUPFILE} ./**/*)
+	mv ${LOCALEDIR}/${BACKUPFILE} resource/locale/${BACKUPFILE}
 	printf "%`tput cols`s"|tr ' ' '-'
 }
 

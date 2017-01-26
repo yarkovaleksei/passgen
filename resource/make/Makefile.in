@@ -1,6 +1,9 @@
 #!/usr/bin/make -f
 
+# Makefile for PassGen project
 # @configure_input@
+
+# Документация с примерами: http://linux.yaroslavl.ru/docs/prog/make_intro_ru.html
 
 prefix         =    @prefix@
 exec_prefix    =    @exec_prefix@
@@ -17,7 +20,9 @@ oldincludedir  =    @oldincludedir@
 datarootdir    =    @datarootdir@
 datadir        =    @datadir@
 infodir        =    @infodir@
+# Каталог для установки файлов локализации
 localedir      =    @localedir@
+# Каталог для установки файлов manpage
 mandir         =    @mandir@
 docdir         =    @docdir@
 htmldir        =    @htmldir@
@@ -25,55 +30,45 @@ dvidir         =    @dvidir@
 pdfdir         =    @pdfdir@
 psdir          =    @psdir@
 
-# Makefile for PassGen project
-# Документация с примерами: http://linux.yaroslavl.ru/docs/prog/make_intro_ru.html
-
-PACKAGE_NAME    	=    @PACKAGE_NAME@
-PACKAGE_VERSION 	=    "@PACKAGE_VERSION@"
-PACKAGE_URL			=    @PACKAGE_URL@
+PACKAGE_NAME        =    @PACKAGE_NAME@
+PACKAGE_VERSION     =    "@PACKAGE_VERSION@"
+PACKAGE_URL         =    @PACKAGE_URL@
 PACKAGE_DESCRIPTION =    "@PACKAGE_DESCRIPTION@"
-PACKAGE_TARNAME		=    "@PACKAGE_TARNAME@"
+PACKAGE_TARNAME     =    "@PACKAGE_TARNAME@"
 
 PACKAGE_AUTHOR      =    "@PACKAGE_AUTHOR@"
 PACKAGE_EMAIL       =    @PACKAGE_BUGREPORT@
-PACKAGE_LICENSE   	=    @PACKAGE_LICENSE@
+PACKAGE_LICENSE     =    @PACKAGE_LICENSE@
 
 # Рабочая оболочка
 SHELL           =    /bin/bash
 # Зависимости пакета
 DEPENDENCIES    =    ""
-# Описание пакета
+# Файл с описанием пакета
 DESCRIPTIONFILE =    "./description-pak"
 # Каталог для собранного бинарного файла
 BINDIR          =    ./bin
-# Каталог для manpage
-MANDIR          =    ./man
-# Путь к файлу manpage
-MANFILE			=    $(MANDIR)/$(PACKAGE_NAME).1
-# Каталог для установки файлов manpage
-MAN_TARGET      =    $(mandir)/man1
 # Каталог для сборки пакета
-BUILDDIR          =    ./build
+BUILDDIR        =    ./build
 # Каталог с исходниками программы
 SRCDIR          =    ./source
 # Каталог для файлов локализации
 LOCALEDIR       =    ./locale
-# Каталог для установки файлов локализации
-LOCALE_TARGET   =    $(localedir)
-# Список каталогов для локализаций (имя каталога соответствует языку: ru, en, fr и т. п.)
-LOCALES			=    $$(find $(LOCALEDIR) -mindepth 1 -maxdepth 1 -type d)
+# Каталог для manpage
+MANDIR          =    ./man
+# Список каталогов для локализаций (имя каталога соответствует языку: ru_RU, en_US и т. п.)
+LOCALES         =    $$(find $(LOCALEDIR) -mindepth 1 -maxdepth 1 -type d)
 # Имя файла локализации
 LOCALE_MO       =    $(PACKAGE_NAME).mo
 # Флаги компилятора
-CFLAGS 			=    @CFLAGS@
-CPPFLAGS		=    @CPPFLAGS@
-LDFLAGS			=    @LDFLAGS@
-CCFLAGS         =    $(CFLAGS) -Wall -std=c99 -fpic -I$(SRCDIR)/h -lcrypt
-#DEFS 			=    @DEFS@ -D_XOPEN_SOURCE=600 -DPACKAGE_LOCALE_DIR=\"$(LOCALE_TARGET)\"
-DEFS 			=    @DEFS@ -D_XOPEN_SOURCE=600 -DPACKAGE_LOCALE_DIR=\"locale\"
+CFLAGS          =    @CFLAGS@
+CPPFLAGS        =    @CPPFLAGS@
+LDFLAGS         =    @LDFLAGS@
+CCFLAGS         =    $(CFLAGS) -Wall -std=c99 -fpic -I$(SRCDIR)/h
+DEFS            =    @DEFS@ -D_XOPEN_SOURCE=600 -DPACKAGE_LOCALE_DIR=\"locale\"
 # Файлы и папки, которые удалятся по команде make [dist]clean
 CLEANED         =    $(BINDIR) ./*.o ./*.*~
-DISTCLEANED     =    $(BUILDDIR) ./*.m4 ./*.log ./*.scan ./*.status ./autom4te.* ./Makefile ./.fuse_hidden* ./$(SRCDIR)/h/*.h.in~ ./$(SRCDIR)/h/stamp-h1 ./translate.sh
+DISTCLEANED     =    $(BUILDDIR) ./*.m4 ./*.log ./*.man ./*.scan ./*.status ./autom4te.* ./Makefile ./.fuse_hidden* ./$(SRCDIR)/h/*.h.in~ ./$(SRCDIR)/h/stamp-h1 ./translate.sh
 
 CHARSET         =    UTF-8
 
@@ -91,10 +86,9 @@ vpath %.c $(SRCDIR)
 vpath %.o .
 
 # http://linux.yaroslavl.ru/docs/prog/gnu_make_3-79_russian_manual.html#SEC25
-objects 	   :=    $(patsubst $(SRCDIR)/%.c,%.o,$(wildcard $(SRCDIR)/*.c))
+objects        :=    $(patsubst $(SRCDIR)/%.c,%.o,$(wildcard $(SRCDIR)/*.c))
 
-
-.PHONY: all build clean distclean install uninstall check help autodoc
+.PHONY: all build clean distclean install uninstall check help doc
 
 all: $(PACKAGE_NAME)
 	@chmod +x ./translate.sh
@@ -105,7 +99,7 @@ $(PACKAGE_NAME): $(objects)
 	@printf "%`tput cols`s"|tr ' ' '-'
 	@mkdir -p $(BINDIR)
 	$(CC) $(DEFS) $(CCFLAGS) -o $(BINDIR)/$(PACKAGE_NAME) $?
-	@echo $(DESCRIPTION) > $(DESCRIPTIONFILE)
+	@echo $(PACKAGE_DESCRIPTION) > $(DESCRIPTIONFILE)
 #	@strip -s $(BINDIR)/$(PACKAGE_NAME) # Удаляем отладочную информацию из бинарника
 
 %.o: %.c
@@ -146,23 +140,33 @@ distclean:
 	@echo "[$(PACKAGE_NAME)] - Dist cleaned"
 	@printf "%`tput cols`s"|tr ' ' '-'
 
+# Установка пакета:
+# Копируем файлы локализации в папки:
+# 	/usr/local/share/locale/passgen/ru_RU/LC_MESSAGES
+# 	/usr/local/share/locale/passgen/en_US/LC_MESSAGES
+# Копируем файлы manpage в папки:
+# 	/usr/local/share/man/ru_RU/man1
+# 	/usr/local/share/man/en_US/man1
 install:
 	@printf "%`tput cols`s"|tr ' ' '-'
 	@install -D $(BINDIR)/$(PACKAGE_NAME) $(bindir)
 	@for localedir in $(LOCALES); do \
 		l=$$(basename $$localedir) && \
-		install -D $$localedir/LC_MESSAGES/$(LOCALE_MO) $(LOCALE_TARGET)/$(PACKAGE_NAME)/$$l/LC_MESSAGES; \
+		install -D $$localedir/LC_MESSAGES/$(LOCALE_MO) $(localedir)/$(PACKAGE_NAME)/$$l/LC_MESSAGES && \
+		install -D -g 0 -o 0 -m 0644 $(MANDIR)/$$l/$(PACKAGE_NAME).1 $(mandir)/$$l/man1/$(PACKAGE_NAME).1 && \
+		gzip --force $(mandir)/$$l/man1/$(PACKAGE_NAME).1; \
 	done
-	@install -D -g 0 -o 0 -m 0644 $(MANFILE) $(MAN_TARGET)
-	@gzip --force $(MAN_TARGET)/$(PACKAGE_NAME).1
 	@echo "[$(PACKAGE_NAME)] - installed to $$(which $(PACKAGE_NAME))"
 	@printf "%`tput cols`s"|tr ' ' '-'
 
 uninstall:
 	@printf "%`tput cols`s"|tr ' ' '-'
 	@rm -rf $(bindir)/$(PACKAGE_NAME)
-	@rm -rf $(MAN_TARGET)/$(PACKAGE_NAME).*
-	@rm -rf $(LOCALE_TARGET)/$(PACKAGE_NAME)
+	@for localedir in $(LOCALES); do \
+		l=$$(basename $$localedir) && \
+		rm -rf $(mandir)/$$l/man1/$(PACKAGE_NAME)*; \
+	done
+	@rm -rf $(localedir)/$(PACKAGE_NAME)
 	@echo "[$(PACKAGE_NAME)] - uninstalled"
 	@printf "%`tput cols`s"|tr ' ' '-'
 
@@ -177,8 +181,8 @@ help:
 	@echo -e "`cat ./resource/make/help`"
 	@printf "%`tput cols`s"|tr ' ' '-'
 
-# Генерируем файл README.md и вставляем в него актуальную информацию
-autodoc:
+# Генерируем документацию
+doc:
 	@printf "%`tput cols`s"|tr ' ' '-'
 	@cat ./resource/readme/1 > ./README.md
 	@test $$(which $(PACKAGE_NAME)) != "" && $(PACKAGE_NAME) -h >> ./README.md || $(BINDIR)/$(PACKAGE_NAME) -h >> ./README.md
@@ -187,4 +191,5 @@ autodoc:
 	@echo "\`\`\`" >> ./README.md
 	@cat ./resource/readme/3 >> ./README.md
 	@echo "[$(PACKAGE_NAME)] - README.md created"
+	@groff -mandoc -t -e -Tascii $(MANDIR)/en_US/$(PACKAGE_NAME).1 | col -bx > en_US.man
 	@printf "%`tput cols`s"|tr ' ' '-'

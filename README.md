@@ -1,9 +1,7 @@
-# Password Generator
+# passgen
 
 - - -
 ### Консольный генератор паролей на C
-
-**Тестировался только на Ubuntu Desktop 14.04**
 
 - - -
 ## Сборка
@@ -36,13 +34,13 @@ $ sudo make install
 
 В общем-то пакет не имеет проблем при любом способе установки и удаления, но мы же привыкли верить Хабрасообществу?
 
-Поэтому вот такая команда задействует **checkinstall** + соберет пакет в каталог **deb**.
+Поэтому вот такая команда задействует **checkinstall** + соберет пакет в каталог **build**.
 
 ```bash
 $ sudo make build install=yes
 ```
 
-Если указать `install=no` или просто опустить параметр `install`, то пакет будет собран в каталог **deb**, но установки не прозойдет.
+Если указать `install=no` или просто опустить параметр `install`, то пакет будет собран в каталог **build**, но установки не прозойдет.
 
 - - -
 ## Установка deb пакета вручную
@@ -82,16 +80,19 @@ $ passgen -h
 	-e, --enable-space               Добавить пробел в шаблон пароля
 
 Примеры использования:
-	$ passgen -l0                    # Ввести длину пароля с клавиатуры
-	$ passgen -l25 -d                # Использовать только английские буквы в нижнем регистре
-	$ passgen -l25 -s                # Использовать только символы и знаки препинания
-	$ passgen -l25 -dn               # Использовать только английские буквы в нижнем регистре и цифры
-	$ passgen -l25 -du               # Использовать только английские буквы в нижнем и верхнем регистре
-	$ passgen -l25 -P123abc          # Использовать только перечисленные символы: '123abc'
-	$ passgen -l25 -P123abc -e       # Использовать только перечисленные символы: '123abc' и пробел
-	$ passgen -l25 -c5               # Список из 5 паролей, по одному в строке
+	passgen -l0                    # Ввести длину пароля с клавиатуры
+	passgen -l25 -d                # Использовать только английские буквы в нижнем регистре
+	passgen -l25 -s                # Использовать только символы и знаки препинания
+	passgen -l25 -dn               # Использовать только английские буквы в нижнем регистре и цифры
+	passgen -l25 -du               # Использовать только английские буквы в нижнем и верхнем регистре
+	passgen -l25 -P123abc          # Использовать только перечисленные символы: '123abc'
+	passgen -l25 -P123abc -e       # Использовать только перечисленные символы: '123abc' и пробел
+	passgen -l25 -c5               # Список из 5 паролей, по одному в строке
 
 Об ошибках сообщайте по адресу <yarkov_aleksei@mail.ru>
+
+Больше информации на странице проекта:
+	https://github.com/yarkovaleksei/passgen
 ```
 
 - - -
@@ -127,12 +128,13 @@ $ sudo dpkg -r passgen
 ```bash
 $ make help
 Usage make:
+    make help                          - view this help information
     make                               - build binary file from source
     make clean                         - clean project folder of *.o, ./bin, etc.
     make distclean                     - clean project folder of ./configure created files
     make check                         - run binary with test parameters
-    make autodoc                       - generate README.md
-    sudo make build install=<yes|no>   - build package
+    make doc                           - generate README.md and en_US.man files
+    sudo make build [install=<yes|no>] - build package [and or not install]
     sudo make install                  - install binary
     sudo make uninstall                - uninstall binary
 ```
@@ -160,9 +162,17 @@ $ ./translate.sh --generate
 
 ## Добавить перевод
 
-
 Чтобы добавить перевод надо создать в каталоге `./locale` папку с именем в формате [ll_CC](https://docs.moodle.org/dev/Table_of_locales) и выполнить команду:
 
 ```bash
 $ ./translate.sh --extract
 ```
+
+- - -
+## Поддерживаемые ОС
+
+*Программа тестировалась на ОС:*
+
+1. Ubuntu Desktop 14.04
+
+Если найдутся добрые люди, которые протестируют на других ОС и отпишутся по указанному адресу, то я буду очень признателен.

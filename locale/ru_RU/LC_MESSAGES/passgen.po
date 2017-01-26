@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: passgen 1.0.0\n"
 "Report-Msgid-Bugs-To: yarkov_aleksei@mail.ru\n"
-"POT-Creation-Date: 2017-01-25 23:24+0300\n"
-"PO-Revision-Date: 2017-01-25 23:24+0300\n"
+"POT-Creation-Date: 2017-01-26 22:39+0300\n"
+"PO-Revision-Date: 2017-01-26 22:39+0300\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -23,9 +23,9 @@ msgstr ""
 msgid "Option %s must be a number!"
 msgstr "Аргумент должен быть числом!"
 
-#: source/main.c:130
+#: source/main.c:131
 #, c-format
-msgid "One of the arguments %s, %s, %s, %s, %s is mandatory"
+msgid "One of the arguments %s is mandatory"
 msgstr "Один из аргументов %s надо указать обязательно"
 
 #: source/passgen.c:23
@@ -155,3 +155,7 @@ msgstr "Список из 5 паролей, по одному в строке"
 #: source/print.c:45
 msgid "On any errors report to the address"
 msgstr "Об ошибках сообщайте по адресу"
+
+#: source/print.c:47
+msgid "Get more information on project page"
+msgstr "Больше информации на странице проекта"
