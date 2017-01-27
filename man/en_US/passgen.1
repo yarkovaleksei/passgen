@@ -46,6 +46,15 @@
 Depending on the parameters program returns one or more strings of random characters.
 .SH OPTIONS
 .TP
+Default password length: 25
+.TP
+Max password length:     4096
+.TP
+Max password count:      1000000
+.TP
+Max pattern length:      200
+.TP
+.TP
 .B \-h, \-\-help
 Help information
 .TP
@@ -54,7 +63,7 @@ Package version
 .TP
 .B \-l, \-\-length=LENGTH
 Password length. If not specified,
-it will be set to 25. If set to 0,
+it will be set to default value. If set to 0,
 the program will ask for input from the keyboard.
 .TP
 .B \-c, \-\-count=COUNT
@@ -85,8 +94,8 @@ Use punctuation to the password
 Add space to the password pattern
 .SH EXAMPLE
 .TP
-.B passgen \-l0
-Input length from the keyboard
+.B passgen \-l0 \-u
+Input length from the keyboard and use uppercase letters only
 .TP
 .B passgen \-l25 \-d
 Use the lowercase letters only

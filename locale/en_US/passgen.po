@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: passgen 1.0.0\n"
 "Report-Msgid-Bugs-To: yarkov_aleksei@mail.ru\n"
-"POT-Creation-Date: 2017-01-26 22:39+0300\n"
+"POT-Creation-Date: 2017-01-27 16:31+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,144 +17,161 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: source/main.c:68 source/main.c:76
+#: source/main.c:77 source/main.c:91
 #, c-format
 msgid "Option %s must be a number!"
-msgstr ""
+msgstr "Option %s must be a number!"
 
-#: source/main.c:131
+#: source/main.c:169
 #, c-format
 msgid "One of the arguments %s is mandatory"
-msgstr ""
+msgstr "One of the arguments %s is mandatory"
 
-#: source/passgen.c:23 source/passgen.c:23
-msgid "Type in a password length"
-msgstr ""
-
-#: source/print.c:10 source/print.c:10
+#: source/print.c:10
 msgid "Console password generator"
-msgstr ""
+msgstr "Console password generator"
 
-#: source/print.c:12 source/print.c:12
+#: source/print.c:12
 msgid "Default values"
-msgstr ""
+msgstr "Default values"
 
-#: source/print.c:13 source/print.c:13
-msgid "Password length"
-msgstr ""
+#: source/print.c:13
+msgid "Default password length"
+msgstr "Default password length"
 
-#: source/print.c:15 source/print.c:15
+#: source/print.c:18
 msgid "Usage keys"
-msgstr ""
+msgstr "Usage keys"
 
-#: source/print.c:16 source/print.c:16
+#: source/print.c:19
 msgid "Help information"
-msgstr ""
+msgstr "Help information"
 
-#: source/print.c:17 source/print.c:17
+#: source/print.c:20
 msgid "Package version"
-msgstr ""
+msgstr "Package version"
 
-#: source/print.c:19 source/print.c:19
+#: source/print.c:22
 msgid "Password length. If not specified,"
-msgstr ""
+msgstr "Password length. If not specified,"
 
-#: source/print.c:20 source/print.c:20
-msgid "it will be set to 25. If set to 0,"
-msgstr ""
+#: source/print.c:23
+msgid "it will be set to default value. If set to 0,"
+msgstr "it will be set to default value. If set to 0,"
 
-#: source/print.c:21 source/print.c:21
+#: source/print.c:24
 msgid "the program will ask for input from the keyboard."
-msgstr ""
+msgstr "the program will ask for input from the keyboard."
 
-#: source/print.c:22 source/print.c:22
+#: source/print.c:25
 msgid "The amount for one time passwords."
-msgstr ""
+msgstr "The amount for one time passwords."
 
-#: source/print.c:23 source/print.c:23
+#: source/print.c:26
 msgid "It is useful when you need to create"
-msgstr ""
+msgstr "It is useful when you need to create"
 
-#: source/print.c:24 source/print.c:24
+#: source/print.c:27
 msgid "a file with a unique string."
-msgstr ""
+msgstr "a file with a unique string."
 
-#: source/print.c:25 source/print.c:25
+#: source/print.c:28
 msgid "A string containing the possible"
-msgstr ""
+msgstr "A string containing the possible"
 
-#: source/print.c:26 source/print.c:26
+#: source/print.c:29
 msgid "characters in the password."
-msgstr ""
+msgstr "characters in the password."
 
-#: source/print.c:27 source/print.c:27
+#: source/print.c:30
 msgid "If the key is specified, the keys"
-msgstr ""
+msgstr "If the key is specified, the keys"
 
-#: source/print.c:28 source/print.c:28
+#: source/print.c:31
 msgid "will be ignored."
-msgstr ""
+msgstr "will be ignored."
 
-#: source/print.c:29 source/print.c:29
+#: source/print.c:32
 msgid "Use uppercase letters in the password"
-msgstr ""
+msgstr "Use uppercase letters in the password"
 
-#: source/print.c:30 source/print.c:30
+#: source/print.c:33
 msgid "Use lowercase letters in the password"
-msgstr ""
+msgstr "Use lowercase letters in the password"
 
-#: source/print.c:31 source/print.c:31
+#: source/print.c:34
 msgid "Use the numbers in the password"
-msgstr ""
+msgstr "Use the numbers in the password"
 
-#: source/print.c:32 source/print.c:32
+#: source/print.c:35
 msgid "Use punctuation to the password"
-msgstr ""
+msgstr "Use punctuation to the password"
 
-#: source/print.c:33 source/print.c:33
+#: source/print.c:36
 msgid "Add space to the password pattern"
-msgstr ""
+msgstr "Add space to the password pattern"
 
-#: source/print.c:35 source/print.c:35
+#: source/print.c:38
 msgid "Example"
-msgstr ""
+msgstr "Example"
 
-#: source/print.c:36 source/print.c:36
-msgid "Input length from the keyboard"
-msgstr ""
+#: source/print.c:39
+msgid "Input length from the keyboard and use uppercase letters only"
+msgstr "Input length from the keyboard and use uppercase letters only"
 
-#: source/print.c:37 source/print.c:37
+#: source/print.c:40
 msgid "Use the lowercase letters only"
-msgstr ""
+msgstr "Use the lowercase letters only"
 
-#: source/print.c:38 source/print.c:38
+#: source/print.c:41
 msgid "Use punctuation marks only"
-msgstr ""
+msgstr "Use punctuation marks only"
 
-#: source/print.c:39 source/print.c:39
+#: source/print.c:42
 msgid "Use lowercase letters and numbers only"
-msgstr ""
+msgstr "Use lowercase letters and numbers only"
 
-#: source/print.c:40 source/print.c:40
+#: source/print.c:43
 msgid "Use lowercase and uppercase letters only"
-msgstr ""
+msgstr "Use lowercase and uppercase letters only"
 
-#: source/print.c:41 source/print.c:41
+#: source/print.c:44
 msgid "Use symbols '123abc' only"
-msgstr ""
+msgstr "Use symbols '123abc' only"
 
-#: source/print.c:42 source/print.c:42
+#: source/print.c:45
 msgid "Use symbols '123abc' with space"
-msgstr ""
+msgstr "Use symbols '123abc' with space"
 
-#: source/print.c:43 source/print.c:43
+#: source/print.c:46
 msgid "List of the 5 passwords, one per line"
-msgstr ""
+msgstr "List of the 5 passwords, one per line"
 
-#: source/print.c:45 source/print.c:45
+#: source/print.c:48
 msgid "On any errors report to the address"
-msgstr ""
+msgstr "On any errors report to the address"
 
-#: source/print.c:47
+#: source/print.c:50
 msgid "Get more information on project page"
-msgstr ""
+msgstr "Get more information on project page"
+
+#: source/main.c:66 source/passgen.c:62 source/print.c:14
+msgid "Max password length"
+msgstr "Max password length"
+
+#: source/main.c:87 source/print.c:15
+msgid "Max password count"
+msgstr "Max password count"
+
+#: source/main.c:100 source/main.c:131 source/print.c:16
+msgid "Max pattern length"
+msgstr "Max pattern length"
+
+#: source/main.c:130
+#, c-format
+msgid "No use key %s with long pattern"
+msgstr "No use key %s with long pattern"
+
+#: source/passgen.c:26
+msgid "Type in a password length. Use only 4 first symbols."
+msgstr "Type in a password length. Use only 4 first symbols."

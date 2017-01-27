@@ -1,10 +1,11 @@
 Usage make:
     make help                          - view this help information
-    make                               - build binary file from source
+    make                               - build binary from source
+    make debug                         - build binary from source with '-DDEBUG=1' option and not 'strip -s' run
     make clean                         - clean project folder of *.o, ./bin, etc.
-    make distclean                     - clean project folder of ./configure created files
+    make distclean                     - clean project folder of ./configure created files (./*.tmp, ./*.log, etc.)
     make check                         - run binary with test parameters
-    make doc                           - generate README.md and en_US.man files
-    sudo make build [install=<yes|no>] - build package [and or not install]
+    make doc                           - generate README.md and manpage files
+    sudo make build [install=<yes|no>] - build package. About 'install' options, see the README.md
     sudo make install                  - install binary
     sudo make uninstall                - uninstall binary

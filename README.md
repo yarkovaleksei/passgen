@@ -57,14 +57,17 @@ $ passgen -h
 Консольный генератор паролей
 
 Параметры по-умолчанию:
-	Длина пароля:                 25
+	Длина пароля по-умолчанию: 25      
+	Максимальная длина пароля: 4096    
+	Максимальное количество паролей: 1000000 
+	Максимальная длина шаблона: 200     
 
 Используемые ключи:
 	-h, --help                       Справочная информация
 	-v, --version                    Номер версии релиза
 
 	-l, --length=LENGTH              Длина пароля. Если не указан, то
-	                                 он будет установлен в 25. Если указать 0,
+	                                 он будет установлен в значение по-умолчанию. Если указать 0,
 	                                 то программа запросит ввод с клавиатуры.
 	-c, --count=COUNT                Количество паролей за один вызов программы.
 	                                 Полезно, когда надо сгенерировать
@@ -80,7 +83,7 @@ $ passgen -h
 	-e, --enable-space               Добавить пробел в шаблон пароля
 
 Примеры использования:
-	passgen -l0                    # Ввести длину пароля с клавиатуры
+	passgen -l0 -u                 # Ввести длину пароля с клавиатуры и использовать только английские буквы в верхнем регистре
 	passgen -l25 -d                # Использовать только английские буквы в нижнем регистре
 	passgen -l25 -s                # Использовать только символы и знаки препинания
 	passgen -l25 -dn               # Использовать только английские буквы в нижнем регистре и цифры
@@ -135,12 +138,13 @@ $ sudo dpkg -r passgen
 $ make help
 Usage make:
     make help                          - view this help information
-    make                               - build binary file from source
+    make                               - build binary from source
+    make debug                         - build binary from source with '-DDEBUG=1' option and not 'strip -s' run
     make clean                         - clean project folder of *.o, ./bin, etc.
-    make distclean                     - clean project folder of ./configure created files
+    make distclean                     - clean project folder of ./configure created files (./*.tmp, ./*.log, etc.)
     make check                         - run binary with test parameters
-    make doc                           - generate README.md and en_US.man files
-    sudo make build [install=<yes|no>] - build package [and or not install]
+    make doc                           - generate README.md and manpage files
+    sudo make build [install=<yes|no>] - build package. About 'install' options, see the README.md
     sudo make install                  - install binary
     sudo make uninstall                - uninstall binary
 ```

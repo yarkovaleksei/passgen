@@ -88,22 +88,30 @@ vpath %.o .
 # http://linux.yaroslavl.ru/docs/prog/gnu_make_3-79_russian_manual.html#SEC25
 objects        :=    $(patsubst $(SRCDIR)/%.c,%.o,$(wildcard $(SRCDIR)/*.c))
 
-.PHONY: all build clean distclean install uninstall check help doc
+.PHONY: all debug build clean distclean install uninstall check help doc
 
+# Запускаем сборку бинарника
 all: $(PACKAGE_NAME)
 	@chmod +x ./translate.sh
-	@echo "[$(PACKAGE_NAME)] - Project compiled"
+	@echo $(PACKAGE_DESCRIPTION) > $(DESCRIPTIONFILE)
 	@printf "%`tput cols`s"|tr ' ' '-'
 
 $(PACKAGE_NAME): $(objects)
-	@printf "%`tput cols`s"|tr ' ' '-'
 	@mkdir -p $(BINDIR)
+	@printf "%`tput cols`s"|tr ' ' '-'
 	$(CC) $(DEFS) $(CCFLAGS) -o $(BINDIR)/$(PACKAGE_NAME) $?
-	@echo $(PACKAGE_DESCRIPTION) > $(DESCRIPTIONFILE)
-#	@strip -s $(BINDIR)/$(PACKAGE_NAME) # Удаляем отладочную информацию из бинарника
+	@strip -s $(BINDIR)/$(PACKAGE_NAME) # Удаляем отладочную информацию из бинарника
+	@echo "[$(PACKAGE_NAME)] - Project compiled"
 
 %.o: %.c
 	$(CC) $(DEFS) $(CCFLAGS) -c $?
+
+# Запускаем сборку бинарника в отладочном режиме, для использования gdb
+debug: $(objects)
+	@mkdir -p $(BINDIR)
+	@printf "%`tput cols`s"|tr ' ' '-'
+	$(CC) $(DEFS) -DDEBUG=1 $(CCFLAGS) -o $(BINDIR)/$(PACKAGE_NAME) $?
+	@echo "[$(PACKAGE_NAME)] - Project compiled with -DDEBUG=1 option"
 
 # Запускаем сборку deb пакета
 build:
@@ -128,12 +136,14 @@ build:
 	--autodoinst=yes \
 	--strip=yes
 
+# Очищаем каталог от временных файлов, которые появились после компиляции
 clean:
 	@printf "%`tput cols`s"|tr ' ' '-'
 	@rm -rf $(CLEANED)
 	@echo "[$(PACKAGE_NAME)] - Project cleaned"
 	@printf "%`tput cols`s"|tr ' ' '-'
 
+# Очищаем каталог от временных файлов, которые появились после выполнения ./configure
 distclean:
 	@printf "%`tput cols`s"|tr ' ' '-'
 	@rm -rf $(DISTCLEANED)
@@ -141,6 +151,8 @@ distclean:
 	@printf "%`tput cols`s"|tr ' ' '-'
 
 # Установка пакета:
+# Копируем бинарник в папку:
+# 	/usr/local/bin
 # Копируем файлы локализации в папки:
 # 	/usr/local/share/locale/passgen/ru_RU/LC_MESSAGES
 # 	/usr/local/share/locale/passgen/en_US/LC_MESSAGES
@@ -159,6 +171,15 @@ install:
 	@echo "[$(PACKAGE_NAME)] - installed to $$(which $(PACKAGE_NAME))"
 	@printf "%`tput cols`s"|tr ' ' '-'
 
+# Удаление пакета:
+# Удаляем бинарник из папки:
+# 	/usr/local/bin
+# Удаляем файлы локализации из папок:
+# 	/usr/local/share/locale/passgen/ru_RU/LC_MESSAGES
+# 	/usr/local/share/locale/passgen/en_US/LC_MESSAGES
+# Удаляем файлы manpage из папок:
+# 	/usr/local/share/man/ru_RU/man1
+# 	/usr/local/share/man/en_US/man1
 uninstall:
 	@printf "%`tput cols`s"|tr ' ' '-'
 	@rm -rf $(bindir)/$(PACKAGE_NAME)
@@ -170,12 +191,18 @@ uninstall:
 	@echo "[$(PACKAGE_NAME)] - uninstalled"
 	@printf "%`tput cols`s"|tr ' ' '-'
 
+# Выполняем тесты для бинарного файла программы и выводим результаты
 check:
 	@printf "%`tput cols`s"|tr ' ' '-'
-	@test $$($(BINDIR)/$(PACKAGE_NAME) -l20 -ds | wc -m) == '21' && echo $(ONELINEOKMSG) || echo $(ONELINEERRMSG)
-	@test $$($(BINDIR)/$(PACKAGE_NAME) -l20 -ds -c5 | wc -l) == '5' && echo $(MULTILINEOKMSG) || echo $(MULTILINEERRMSG)
+	@test $$($(BINDIR)/$(PACKAGE_NAME) -l20 -ds | wc -m) == '21' && \
+	echo $(ONELINEOKMSG) || \
+	echo $(ONELINEERRMSG)
+	@test $$($(BINDIR)/$(PACKAGE_NAME) -l20 -ds -c5 | wc -l) == '5' && \
+	echo $(MULTILINEOKMSG) || \
+	echo $(MULTILINEERRMSG)
 	@printf "%`tput cols`s"|tr ' ' '-'
 
+# Выводим справку по целям Makefile
 help:
 	@printf "%`tput cols`s"|tr ' ' '-'
 	@echo -e "`cat ./resource/make/help`"

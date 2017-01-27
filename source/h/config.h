@@ -1,8 +1,23 @@
 /* source/h/config.h.  Generated from config.h.in by configure.  */
 /* resource/config.h.in.  Generated from configure.ac by autoheader.  */
 
+/* Define to the DEFAULT_PASSWORD_LENGTH */
+#define DEFAULT_PASSWORD_LENGTH 25
+
+/* Define to the ERROR_MSG_BUFFER_LENGTH */
+#define ERROR_MSG_BUFFER_LENGTH 300
+
 /* Define to 1 if you have the <stdlib.h> header file. */
 /* #undef HAVE_STDLIB_H */
+
+/* Define to the MAX_PASSWORD_COUNT */
+#define MAX_PASSWORD_COUNT 1000000
+
+/* Define to the MAX_PASSWORD_LENGTH */
+#define MAX_PASSWORD_LENGTH 4096
+
+/* Define to the MAX_PATTERN_LENGTH */
+#define MAX_PATTERN_LENGTH 200
 
 /* Define to the package author name */
 #define PACKAGE_AUTHOR "Yarkov Aleksey"

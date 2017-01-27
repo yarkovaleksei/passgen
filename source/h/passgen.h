@@ -10,8 +10,8 @@ struct passgen {
 	 * @name getPassword
 	 * Функция генерирует строку из случайных
 	 * символов и возвращает её.
-	 * @param symbols {char*} Строка, символы которой будут использоваться в генераторе
-	 * @param length {int} Длина пароля
+	 * @param {char*} symbols Строка, символы которой будут использоваться в генераторе
+	 * @param {int} length Длина пароля
 	 * @return Строка из случайных символов длиной length
 	 */
 	char* (*getPassword)(char*, int);
@@ -19,7 +19,7 @@ struct passgen {
 	 * @namespace PassGen
 	 * @name getChar
 	 * Возвращает один случайный символ из переданной в аргументе строки
-	 * @param symbols {char*} Строка, из которой будет взят один случайный символ
+	 * @param {char*} symbols Строка, из которой будет взят один случайный символ
 	 * @return Случайный символ из строки symbols
 	 */
 	char (*getChar)(char*);

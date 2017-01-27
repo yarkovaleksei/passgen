@@ -22,23 +22,20 @@ struct print {
 	 * @name echo
 	 * Функция выводит список переданных аргументов
 	 * в виде форматированной строки в STDOUT.
-	 * @param msg {char*} Строка в формате sprintf
-	 * @param ... {} Аргументы для форматирования строки msg
+	 * @param {char*} msg Строка в формате sprintf
+	 * @param {va_list} ... Аргументы для форматирования строки msg
 	 */
 	void (*echo)(char *const, ...);
 	/**
 	 * @namespace Print
 	 * @name error
 	 * Функция выводит список переданных аргументов
-	 * в виде форматированной строки в STDERR.
-	 * @param msg {char*} Строка в формате sprintf
-	 * @param ... {} Аргументы для форматирования строки msg
+	 * в виде форматированной строки в STDERR и завершает работу
+	 * программы с ошибкой.
+	 * @param {char*} msg Строка в формате sprintf
+	 * @param {va_list} ... Аргументы для форматирования строки msg
 	 */
 	void (*error)(char *const, ...);
-
-	char* (*fmt_help)(int);
-
-	char* (*fmt_man)(int);
 };
 extern const struct print Print;
 

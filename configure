@@ -595,11 +595,16 @@ CPPFLAGS
 LDFLAGS
 CFLAGS
 CC
-CURDATE
+ERROR_MSG_BUFFER_LENGTH
+MAX_PATTERN_LENGTH
+MAX_PASSWORD_COUNT
+MAX_PASSWORD_LENGTH
+DEFAULT_PASSWORD_LENGTH
 PACKAGE_EMAIL
 PACKAGE_LICENSE
 PACKAGE_DESCRIPTION
 PACKAGE_AUTHOR
+CURDATE
 target_alias
 host_alias
 build_alias
@@ -1766,18 +1771,46 @@ ac_compiler_gnu=$ac_cv_c_compiler_gnu
 
 
 
+CURDATE=$(date "+%d %b %Y")
 PACKAGE_AUTHOR="Yarkov Aleksey"
 PACKAGE_DESCRIPTION="Console password generator"
 PACKAGE_LICENSE="MIT"
 PACKAGE_EMAIL="yarkov_aleksei@mail.ru"
 DEFS=" -DHAVE_CONFIG_H"
-CURDATE=$(date "+%d %b %Y")
+
+DEFAULT_PASSWORD_LENGTH=25
+MAX_PASSWORD_LENGTH=4096
+MAX_PASSWORD_COUNT=1000000
+MAX_PATTERN_LENGTH=200
+ERROR_MSG_BUFFER_LENGTH=300
 
 
 
 
 
 
+
+
+
+
+
+
+
+
+
+$as_echo "#define DEFAULT_PASSWORD_LENGTH 25" >>confdefs.h
+
+
+$as_echo "#define MAX_PASSWORD_LENGTH 4096" >>confdefs.h
+
+
+$as_echo "#define MAX_PASSWORD_COUNT 1000000" >>confdefs.h
+
+
+$as_echo "#define MAX_PATTERN_LENGTH 200" >>confdefs.h
+
+
+$as_echo "#define ERROR_MSG_BUFFER_LENGTH 300" >>confdefs.h
 
 
 
