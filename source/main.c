@@ -170,7 +170,6 @@ int main (int argc, char * const argv[], char * const argp[])
 	}
 
 	free(source);
-	*source = 0;
 
 	exit(EXIT_SUCCESS);
 }
