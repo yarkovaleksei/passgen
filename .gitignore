@@ -11,3 +11,4 @@ autom4te.*/
 *.status
 description-pak
 Makefile
+translate.sh
