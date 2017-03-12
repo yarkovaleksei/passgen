@@ -1,17 +1,25 @@
 #!/bin/bash
 
+set -e
+
 # Очищаем папку проекта от лишнего
 make clean && make distclean
-# Занускаем создание конфигурационных файлов
+
+# Запускаем создание конфигурационных файлов
 autoreconf && ./configure
+
 # Компилируем программу
 make
+
 # Если пакет установлен, то удаляем
 test $(which passgen) != "" && sudo dpkg -r passgen
+
 # Ставим свежий пакет
 sudo make build install=yes
+
 # Генерируем README.md
 make doc
+
 # Очищаем папку проекта от лишнего
 make clean && make distclean
 

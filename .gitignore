@@ -1,14 +1,19 @@
-.fuse_*
-.*~
+# Folders
 bin/
 deb/
 doc-pak/
 autom4te.*/
+
+# Files by mask
+.*~
 *.o
 *.m4
 *.log
 *.scan
 *.status
+.fuse_hidden*
+
+# Files by name
 description-pak
 Makefile
 translate.sh
